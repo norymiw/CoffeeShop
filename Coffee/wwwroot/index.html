@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Coffee</title>
+    <base href="/" />
+    <link rel="stylesheet" href="css/app.css" />
+    <!-- If you add any scoped CSS files, uncomment the following to load them
+    <link href="Coffee.styles.css" rel="stylesheet" /> -->
+    <link href="manifest.webmanifest" rel="manifest" />
+    <link rel="apple-touch-icon" sizes="512x512" href="icon-512.png" />
+    <link rel="apple-touch-icon" sizes="192x192" href="icon-192.png" />
+</head>
+
+<body>
+    <div id="app">
+        <svg class="loading-progress">
+            <circle r="40%" cx="50%" cy="50%" />
+            <circle r="40%" cx="50%" cy="50%" />
+        </svg>
+        <div class="loading-progress-text"></div>
+    </div>
+
+    <div id="blazor-error-ui">
+        An unhandled error has occurred.
+        <a href="" class="reload">Reload</a>
+        <a class="dismiss">🗙</a>
+    </div>
+    <script src="_framework/blazor.webassembly.js"></script>
+    <script>navigator.serviceWorker.register('service-worker.js');</script>
+
+    <script src="https://api-maps.yandex.ru/2.1/?apikey=912db668-bb9e-4433-9e65-adbcae73d1f0&lang=ru_RU" type="text/javascript"></script>
+    <script>
+        function initMap() {
+            ymaps.ready(function () {
+                const map = new ymaps.Map("map", {
+                    center: [55.76, 37.64],
+                    zoom: 12
+                });
+
+                // Добавляем метки
+                const marker1 = new ymaps.Placemark([55.76, 37.64], {
+                    hintContent: 'Основное кафе'
+                });
+
+                const marker2 = new ymaps.Placemark([55.74, 37.60], {
+                    hintContent: 'Филиал'
+                });
+
+                map.geoObjects.add(marker1).add(marker2);
+            });
+        }
+    </script>
+</body>
+
+</html>

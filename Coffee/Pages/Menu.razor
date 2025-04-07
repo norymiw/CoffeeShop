@@ -1,0 +1,174 @@
+﻿@page "/menu"
+@inject ApiService ApiService
+@implements IDisposable
+
+<PageTitle>Меню - Coffee</PageTitle>
+
+<h1>Наше меню</h1>
+
+<div class="category-tabs">
+    @foreach (var category in Enum.GetValues<DrinkCategory>())
+    {
+        <button @onclick="() => LoadCategory(category)"
+                class="@(currentCategory == category ? "active" : "")">
+            @GetCategoryName(category)
+        </button>
+    }
+</div>
+
+@if (drinks == null)
+{
+    <p>Загрузка...</p>
+}
+else if (!drinks.Any())
+{
+    <p>Нет напитков в выбранной категории</p>
+}
+else
+{
+    <div class="drinks-grid">
+        @foreach (var drink in drinks)
+        {
+            <div class="drink-card" @onclick="() => ShowDetails(drink)">
+                <img src="@drink.ImageUrl" alt="@drink.Name" />
+                <h3>@drink.Name</h3>
+                <p>От @drink.Sizes.Min(s => s.Price) руб.</p>
+            </div>
+        }
+    </div>
+}
+
+@if (selectedDrink != null)
+{
+    <div class="modal-overlay" @onclick="CloseDetails">
+        <div class="modal-content" @onclick:stopPropagation>
+            <button class="close-btn" @onclick="CloseDetails">×</button>
+            <h2>@selectedDrink.Name</h2>
+            <img src="@selectedDrink.ImageUrl" alt="@selectedDrink.Name" />
+            <p>@selectedDrink.Description</p>
+            <h3>Состав:</h3>
+            <p>@selectedDrink.Ingredients</p>
+
+            <h3>Доступные размеры:</h3>
+            <div class="sizes-grid">
+                @foreach (var size in selectedDrink.Sizes)
+                {
+                    <div class="size-card">
+                        <h4>@size.SizeName</h4>
+                        <p>@size.Price руб.</p>
+                        <p>@size.VolumeMl мл</p>
+                        <p>@size.Nutrition.Calories ккал</p>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    private List<Drink>? drinks;
+    private Drink? selectedDrink;
+    private DrinkCategory currentCategory = DrinkCategory.Seasonal;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadCategory(currentCategory);
+    }
+
+    private async Task LoadCategory(DrinkCategory category)
+    {
+        currentCategory = category;
+        drinks = await ApiService.GetDrinksByCategory(category);
+    }
+
+    private void ShowDetails(Drink drink)
+    {
+        selectedDrink = drink;
+    }
+
+    private void CloseDetails()
+    {
+        selectedDrink = null;
+    }
+
+    private string GetCategoryName(DrinkCategory category) => category switch
+    {
+        DrinkCategory.Seasonal => "Сезонное",
+        DrinkCategory.Signature => "Фирменное",
+        DrinkCategory.AuthorTeas => "Авторские чаи",
+        DrinkCategory.Classic => "Классика",
+        DrinkCategory.Cold => "Холодные напитки",
+        _ => category.ToString()
+    };
+
+    public void Dispose()
+    {
+        selectedDrink = null;
+    }
+}
+
+<style>
+    .category-tabs {
+        display: flex;
+        gap: 0.5rem;
+        margin: 1rem 0;
+    }
+
+        .category-tabs button {
+            padding: 0.5rem 1rem;
+            border: none;
+            background-color: #eee;
+            cursor: pointer;
+        }
+
+            .category-tabs button.active {
+                background-color: #4a2c2a;
+                color: white;
+            }
+
+    .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0,0,0,0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    }
+
+    .modal-content {
+        background-color: white;
+        padding: 2rem;
+        border-radius: 8px;
+        max-width: 800px;
+        max-height: 90vh;
+        overflow-y: auto;
+        position: relative;
+    }
+
+    .close-btn {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        font-size: 1.5rem;
+        background: none;
+        border: none;
+        cursor: pointer;
+    }
+
+    .sizes-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+
+    .size-card {
+        border: 1px solid #ddd;
+        padding: 1rem;
+        border-radius: 4px;
+    }
+</style>

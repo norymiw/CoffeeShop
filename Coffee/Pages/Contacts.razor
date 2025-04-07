@@ -1,0 +1,53 @@
+﻿@page "/contacts"
+@inject IJSRuntime JSRuntime
+
+<PageTitle>Контакты - Coffee Shop</PageTitle>
+
+<h1>Наши контакты</h1>
+
+<div class="contacts-container">
+    <div class="contact-info">
+        <h2>Адреса</h2>
+        <p><strong>Основное кафе:</strong> ул. Кофейная, 123</p>
+        <p><strong>Филиал:</strong> пр. Ароматный, 45</p>
+
+        <h2>Часы работы</h2>
+        <p>Пн-Пт: 8:00 - 22:00</p>
+        <p>Сб-Вс: 9:00 - 23:00</p>
+
+        <h2>Контакты</h2>
+        <p>Телефон: +7 (123) 456-78-90</p>
+        <p>Email: info@coffeeshop.example</p>
+
+        <h2>Работа у нас</h2>
+        <p>Отправьте резюме на hr@coffeeshop.example</p>
+    </div>
+
+    <div class="map-container">
+        <div id="map" style="height: 400px; width: 100%;"></div>
+    </div>
+</div>
+
+@code {
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("initMap");
+        }
+    }
+}
+
+<style>
+    .contacts-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+    }
+
+    @@media (max-width: 768px) {
+        .contacts-container {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>

@@ -1,0 +1,47 @@
+﻿@page "/about"
+
+<PageTitle>О нас - Coffee Shop</PageTitle>
+
+<h1>О нашей кофейне</h1>
+
+<div class="about-content">
+    <section>
+        <h2>Наша история</h2>
+        <p>Мы открылись в 2010 году с маленькой кофейни в центре города...</p>
+    </section>
+
+    <section>
+        <h2>Наша философия</h2>
+        <p>Мы используем только лучшие сорта кофе и натуральные ингредиенты...</p>
+    </section>
+
+    <section class="team-section">
+        <h2>Наша команда</h2>
+        <div class="team-grid">
+            <div class="team-member">
+                <img src="/images/team1.jpg" alt="Бариста Анна" />
+                <h3>Анна</h3>
+                <p>Главный бариста</p>
+            </div>
+            <!-- Другие члены команды -->
+        </div>
+    </section>
+</div>
+
+<style>
+    .about-content {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .team-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 2rem;
+    }
+
+    .team-member img {
+        width: 100%;
+        border-radius: 50%;
+    }
+</style>
