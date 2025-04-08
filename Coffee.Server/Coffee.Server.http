@@ -1,6 +1,0 @@
-@Coffee.Server_HostAddress = http://localhost:5241
-
-GET {{Coffee.Server_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
