@@ -1,4 +1,5 @@
 ﻿@page "/menu"
+@inject HttpClient Http //добавила из нового
 @inject NavigationManager Navigation
 
 <!DOCTYPE html>
@@ -404,7 +405,7 @@
         <main>
             <div class="page-header">
                 <h1 class="page-title">ПОЛНОЕ МЕНЮ</h1>
-                <p class="page-subtitle">ВСЕ НАШИ НАПИТКИ В ОДНОМ МЕСТЕ</p>
+                <p class="page-subtitle">ВСЕ НАШИ НАПИТКИ И ДЕСЕРТЫ В ОДНОМ МЕСТЕ</p>
             </div>
 
             <div class="menu-container">
@@ -412,30 +413,13 @@
                 <div class="menu-section">
                     <h2 class="section-title">КОФЕ</h2>
                     <div class="menu-items">
-                        <div class="menu-item">
-                            <span class="item-name">Эспрессо</span>
-                            <span class="item-price">250 ₽</span>
-                        </div>
-                        <div class="menu-item">
-                            <span class="item-name">Американо</span>
-                            <span class="item-price">280 ₽</span>
-                        </div>
-                        <div class="menu-item">
-                            <span class="item-name">Капучино</span>
-                            <span class="item-price">320 ₽</span>
-                        </div>
-                        <div class="menu-item">
-                            <span class="item-name">Латте</span>
-                            <span class="item-price">340 ₽</span>
-                        </div>
-                        <div class="menu-item">
-                            <span class="item-name">Флэт Уайт</span>
-                            <span class="item-price">350 ₽</span>
-                        </div>
-                        <div class="menu-item">
-                            <span class="item-name">Раф</span>
-                            <span class="item-price">370 ₽</span>
-                        </div>
+                        @foreach (var item in menuItemsClMenu) //если не будет работать с айтемом, то подставьте цифры к переменной
+                        {
+                            <div class="menu-item">
+                                <span class="item-name">@item.Name</span>
+                                <span class="item-price">@item.Price ₽</span>
+                            </div>
+                        }
                     </div>
                 </div>
 
@@ -443,29 +427,13 @@
                 <div class="menu-section">
                     <h2 class="section-title">АВТОРСКИЕ ЧАИ</h2>
                     <div class="menu-items">
-                        <div class="menu-item">
-                            <span class="item-name">Имбирный чай с медом</span>
-                            <span class="item-price">320 ₽</span>
-                        </div>
-                        <div class="item-description">Ароматный черный чай с имбирем, медом и лимоном</div>
-
-                        <div class="menu-item">
-                            <span class="item-name">Мятный улун лайм</span>
-                            <span class="item-price">380 ₽</span>
-                        </div>
-                        <div class="item-description">Освежающий улун с мятой и лаймом, с легкими цветочными нотами</div>
-
-                        <div class="menu-item">
-                            <span class="item-name">Цитрусовый ройбуш</span>
-                            <span class="item-price">290 ₽</span>
-                        </div>
-                        <div class="item-description">Насыщенный ройбуш с апельсином, лимоном и специями</div>
-
-                        <div class="menu-item">
-                            <span class="item-name">Ягодный чай гибискус</span>
-                            <span class="item-price">270 ₽</span>
-                        </div>
-                        <div class="item-description">Яркий кисло-сладкий напиток из гибискуса с малиной и смородиной</div>
+                        @foreach (var item in menuItemsTea)
+                        {
+                            <div class="menu-item">
+                                <span class="item-name">@item.Name</span>
+                                <span class="item-price">@item.Price ₽</span>
+                            </div>
+                        }
                     </div>
                 </div>
 
@@ -473,53 +441,13 @@
                 <div class="menu-section">
                     <h2 class="section-title">ВЕСНА-ЛЕТО</h2>
                     <div class="menu-items">
-                        <div class="menu-item">
-                            <span class="item-name">Клубничный раф</span>
-                            <span class="item-price">390 ₽</span>
-                        </div>
-                        <div class="item-description">Нежный раф с клубничным пюре и ванильным сиропом</div>
-
-                        <div class="menu-item">
-                            <span class="item-name">Кокосовый айс кофе</span>
-                            <span class="item-price">350 ₽</span>
-                        </div>
-                        <div class="item-description">Освежающий холодный кофе с кокосовым молоком</div>
-
-                        <div class="menu-item">
-                            <span class="item-name">Лавандовый латте</span>
-                            <span class="item-price">370 ₽</span>
-                        </div>
-                        <div class="item-description">Ароматный латте с лавандовым сиропом</div>
-
-                        <div class="menu-item">
-                            <span class="item-name">Лимонный тоник</span>
-                            <span class="item-price">320 ₽</span>
-                        </div>
-                        <div class="item-description">Бодрящий эспрессо с тоником и лимоном</div>
-
-                        <div class="menu-item">
-                            <span class="item-name">Малиновый фраппучино</span>
-                            <span class="item-price">410 ₽</span>
-                        </div>
-                        <div class="item-description">Освежающий фраппучино с малиновым пюре</div>
-
-                        <div class="menu-item">
-                            <span class="item-name">Матча латте</span>
-                            <span class="item-price">380 ₽</span>
-                        </div>
-                        <div class="item-description">Традиционный японский чай матча с молоком</div>
-
-                        <div class="menu-item">
-                            <span class="item-name">Огуречно-мятный лимонад</span>
-                            <span class="item-price">290 ₽</span>
-                        </div>
-                        <div class="item-description">Освежающий лимонад с огурцом, мятой и лаймом</div>
-
-                        <div class="menu-item">
-                            <span class="item-name">Персиковый чай</span>
-                            <span class="item-price">310 ₽</span>
-                        </div>
-                        <div class="item-description">Ароматный холодный чай с персиковым сиропом</div>
+                        @foreach (var item in menuItemsSprSum)
+                        {
+                            <div class="menu-item">
+                                <span class="item-name">@item.Name</span>
+                                <span class="item-price">@item.Price ₽</span>
+                            </div>
+                        }
                     </div>
                 </div>
 
@@ -527,53 +455,27 @@
                 <div class="menu-section">
                     <h2 class="section-title">ФИРМЕННОЕ МЕНЮ</h2>
                     <div class="menu-items">
-                        <div class="menu-item">
-                            <span class="item-name">Ягодный лимонад с матчей</span>
-                            <span class="item-price">420 ₽</span>
-                        </div>
-                        <div class="item-description">Освежающий лимонад с ягодным миксом и порошком матча</div>
+                        @foreach (var item in menuItemsComMenu)
+                        {
+                            <div class="menu-item">
+                                <span class="item-name">@item.Name</span>
+                                <span class="item-price">@item.Price ₽</span>
+                            </div>
+                        }
+                    </div>
+                </div>
 
-                        <div class="menu-item">
-                            <span class="item-name">Мокко из Шварцвальда</span>
-                            <span class="item-price">450 ₽</span>
-                        </div>
-                        <div class="item-description">Насыщенный мокко с вишневым сиропом и черным шоколадом</div>
-
-                        <div class="menu-item">
-                            <span class="item-name">Эхо карамельного облака</span>
-                            <span class="item-price">390 ₽</span>
-                        </div>
-                        <div class="item-description">Воздушный латте с карамельным сиропом и ванильной пеной</div>
-
-                        <div class="menu-item">
-                            <span class="item-name">Латте с медом и корицей</span>
-                            <span class="item-price">370 ₽</span>
-                        </div>
-                        <div class="item-description">Традиционный латте с натуральным медом и корицей</div>
-
-                        <div class="menu-item">
-                            <span class="item-name">Апельсиновый тоник для эспрессо</span>
-                            <span class="item-price">350 ₽</span>
-                        </div>
-                        <div class="item-description">Энергичный эспрессо с тоником и апельсиновым сиропом</div>
-
-                        <div class="menu-item">
-                            <span class="item-name">Латте с фисташковым кремом</span>
-                            <span class="item-price">430 ₽</span>
-                        </div>
-                        <div class="item-description">Нежный латте с фисташковым сиропом и воздушным кремом</div>
-
-                        <div class="menu-item">
-                            <span class="item-name">Холодный напиток из соленых ирисок</span>
-                            <span class="item-price">380 ₽</span>
-                        </div>
-                        <div class="item-description">Молочный напиток со вкусом соленой карамели</div>
-
-                        <div class="menu-item">
-                            <span class="item-name">Латте с дымчатым кленом</span>
-                            <span class="item-price">410 ₽</span>
-                        </div>
-                        <div class="item-description">Уникальный латте с кленовым сиропом и дымчатым ароматом</div>
+                <!-- Холодные напитки --> //добавила
+                <div class="menu-section">
+                    <h2 class="section-title">ХОЛОДНЫЕ НАПИТКИ</h2>
+                    <div class="menu-items">
+                        @foreach (var item in menuItemsCold)
+                        {
+                            <div class="menu-item">
+                                <span class="item-name">@item.Name</span>
+                                <span class="item-price">@item.Price ₽</span>
+                            </div>
+                        }
                     </div>
                 </div>
 
@@ -581,35 +483,13 @@
                 <div class="menu-section">
                     <h2 class="section-title">ДЕСЕРТЫ</h2>
                     <div class="menu-items">
-                        <div class="menu-item">
-                            <span class="item-name">Круассан классический</span>
-                            <span class="item-price">220 ₽</span>
-                        </div>
-
-                        <div class="menu-item">
-                            <span class="item-name">Круассан с миндальным кремом</span>
-                            <span class="item-price">280 ₽</span>
-                        </div>
-
-                        <div class="menu-item">
-                            <span class="item-name">Чизкейк Нью-Йорк</span>
-                            <span class="item-price">350 ₽</span>
-                        </div>
-
-                        <div class="menu-item">
-                            <span class="item-name">Тирамису</span>
-                            <span class="item-price">370 ₽</span>
-                        </div>
-
-                        <div class="menu-item">
-                            <span class="item-name">Маффин шоколадный</span>
-                            <span class="item-price">250 ₽</span>
-                        </div>
-
-                        <div class="menu-item">
-                            <span class="item-name">Панна котта с ягодным соусом</span>
-                            <span class="item-price">320 ₽</span>
-                        </div>
+                        @foreach (var item in menuItemsDes)
+                        {
+                            <div class="menu-item">
+                                <span class="item-name">@item.Name</span>
+                                <span class="item-price">@item.Price ₽</span>
+                            </div>
+                        }
                     </div>
                 </div>
             </div>
@@ -674,6 +554,65 @@
 
 @code {
     private bool isBurgerMenuOpen = false;
+    private List<MenuItemDto> menuItemsSprSum;
+    private List<MenuItemDto> menuItemsComMenu;
+    private List<MenuItemDto> menuItemsTea;
+    private List<MenuItemDto> menuItemsClMenu;
+    private List<MenuItemDto> menuItemsCold;
+    private List<MenuItemDto> menuItemsDes;
+    private string errorMessage;
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            string category1 = "ВеснаЛето";
+            string encoded1 = System.Net.WebUtility.UrlEncode(category1);
+            menuItemsSprSum = await Http.GetFromJsonAsync<List<MenuItemDto>>(
+    $"http://localhost:5153/Menu/category/{category1}");
+
+            string category2 = "Фирменное меню";
+            string encoded2 = System.Net.WebUtility.UrlEncode(category2);
+            menuItemsComMenu = await Http.GetFromJsonAsync<List<MenuItemDto>>(
+    $"http://localhost:5153/Menu/category/{category2}");
+
+            string category3 = "Авторские чаи";
+            string encoded3 = System.Net.WebUtility.UrlEncode(category3);
+            menuItemsTea = await Http.GetFromJsonAsync<List<MenuItemDto>>(
+    $"http://localhost:5153/Menu/category/{category3}");
+
+            string category4 = "Классические напитки";
+            string encoded4 = System.Net.WebUtility.UrlEncode(category4);
+            menuItemsClMenu = await Http.GetFromJsonAsync<List<MenuItemDto>>(
+    $"http://localhost:5153/Menu/category/{category4}");
+
+            string category5 = "Холодные напитки";
+            string encoded5 = System.Net.WebUtility.UrlEncode(category5);
+            menuItemsCold = await Http.GetFromJsonAsync<List<MenuItemDto>>(
+    $"http://localhost:5153/Menu/category/{category5}");
+
+            string category6 = "Десерты";
+            string encoded6 = System.Net.WebUtility.UrlEncode(category6);
+            menuItemsDes = await Http.GetFromJsonAsync<List<MenuItemDto>>(
+    $"http://localhost:5153/Menu/category/{category6}");
+
+        }
+        catch (Exception ex)
+        {
+            errorMessage = ex.Message;
+        }
+    }
+
+    public class MenuItemDto
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public decimal Price { get; set; }
+        public string Category { get; set; }
+        public int Calories { get; set; }
+
+        public string ImageUrl { get; init; } //добавила
+    }
 
     private void ToggleBurgerMenu()
     {

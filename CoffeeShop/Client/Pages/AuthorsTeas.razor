@@ -1,4 +1,5 @@
 ﻿@page "/tea"
+@inject HttpClient Http //добавила из нового
 @inject NavigationManager Navigation
 
 <!DOCTYPE html>
@@ -451,36 +452,24 @@
             </div>
 
             <div class="teas-grid">
-                @foreach (var tea in teas)
+                @foreach (var item in menuItems)
                 {
                     <div class="tea-card">
                         <div class="tea-image-container">
-                            <img src="@tea.ImageUrl" alt="@tea.Name" class="tea-image">
+                            <img src="@item.ImageUrl" alt="@item.Name" class="tea-image">
                         </div>
                         <div class="tea-info">
-                            <h3 class="tea-name">@tea.Name</h3>
-                            <p class="tea-description">@tea.Description</p>
+                            <h3 class="tea-name">@item.Name</h3>
+                            <p class="tea-description">@item.Description</p>
 
                             <div class="nutrition-info">
                                 <div class="nutrition-row">
                                     <span class="nutrition-title">Ккал:</span>
-                                    <span class="nutrition-value">@tea.Calories</span>
-                                </div>
-                                <div class="nutrition-row">
-                                    <span class="nutrition-title">Белки, г:</span>
-                                    <span class="nutrition-value">@tea.Protein.ToString("0.0")</span>
-                                </div>
-                                <div class="nutrition-row">
-                                    <span class="nutrition-title">Жиры, г:</span>
-                                    <span class="nutrition-value">@tea.Fat.ToString("0.0")</span>
-                                </div>
-                                <div class="nutrition-row">
-                                    <span class="nutrition-title">Углеводы, г:</span>
-                                    <span class="nutrition-value">@tea.Carbs.ToString("0.0")</span>
+                                    <span class="nutrition-value">@item.Calories</span>
                                 </div>
                             </div>
 
-                            <p class="tea-price">@tea.Price ₽</p>
+                            <p class="tea-price">@item.Price ₽</p>
                         </div>
                     </div>
                 }
@@ -546,67 +535,35 @@
 
 @code {
     private bool isBurgerMenuOpen = false;
+    private List<MenuItemDto> menuItems;
+    private string errorMessage;
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            string category = "Авторские чаи";
+            string encoded = System.Net.WebUtility.UrlEncode(category);
 
-    private class Tea
+            menuItems = await Http.GetFromJsonAsync<List<MenuItemDto>>(
+    $"http://localhost:5153/Menu/category/{category}");
+        }
+        catch (Exception ex)
+        {
+            errorMessage = ex.Message;
+        }
+    }
+
+    public class MenuItemDto
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public decimal Price { get; set; }
-        public string ImageUrl { get; set; }
+        public string Category { get; set; }
         public int Calories { get; set; }
-        public decimal Protein { get; set; }
-        public decimal Fat { get; set; }
-        public decimal Carbs { get; set; }
-    }
 
-    private List<Tea> teas = new()
-    {
-        new Tea {
-            Id = 1,
-            Name = "ИМБИРНЫЙ ЧАЙ С МЕДОМ",
-            Description = "Ароматный черный чай с имбирем, медом и лимоном - идеальный напиток для холодных дней",
-            Price = 320,
-            ImageUrl = "/авторские чаи/имбирный чай с медом.jpg",
-            Calories = 50,
-            Protein = 0.5m,
-            Fat = 0.1m,
-            Carbs = 12.3m
-        },
-        new Tea {
-            Id = 2,
-            Name = "МЯТНЫЙ УЛУН ЛАЙМ",
-            Description = "Освежающий улун с мятой и лаймом, с легкими цветочными нотами",
-            Price = 380,
-            ImageUrl = "/авторские чаи/мята улун лайм.jpg",
-            Calories = 5,
-            Protein = 0.2m,
-            Fat = 0m,
-            Carbs = 1.2m
-        },
-        new Tea {
-            Id = 3,
-            Name = "ЦИТРУСОВЫЙ РОЙБУШ",
-            Description = "Насыщенный ройбуш с апельсином, лимоном и специями, без кофеина",
-            Price = 290,
-            ImageUrl = "/авторские чаи/цитрус ройбуш.jpg",
-            Calories = 15,
-            Protein = 0.3m,
-            Fat = 0m,
-            Carbs = 3.5m
-        },
-        new Tea {
-            Id = 4,
-            Name = "ЯГОДНЫЙ ЧАЙ ГИБИСКУС",
-            Description = "Яркий кисло-сладкий напиток из гибискуса с малиной и смородиной",
-            Price = 270,
-            ImageUrl = "/авторские чаи/ягоды чай гибискус.jpg",
-            Calories = 25,
-            Protein = 0.4m,
-            Fat = 0.1m,
-            Carbs = 6.2m
-        }
-    };
+        public string ImageUrl { get; init; } //добавила
+    }
 
     private void ToggleBurgerMenu()
     {
