@@ -1,0 +1,688 @@
+﻿@page "/menu"
+@inject NavigationManager Navigation
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="logotip.png" type="image/png">
+    <title>ECHO COFFEE - Полное меню</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f8f5f0;
+            color: #3a3226;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            flex: 1;
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 30px 0;
+            border-bottom: 1px solid #d9d2c5;
+            position: relative;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-img {
+            height: 50px;
+            width: auto;
+        }
+
+        .logo-text {
+            font-size: 28px;
+            font-weight: 300;
+            letter-spacing: 2px;
+            color: #3a3226;
+        }
+
+            .logo-text span {
+                font-weight: 700;
+            }
+
+        /* Навигация */
+        nav {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 40px;
+            margin: 0;
+            padding: 0;
+        }
+
+            .nav-menu li a {
+                text-decoration: none;
+                color: #3a3226;
+                font-size: 16px;
+                font-weight: 400;
+                letter-spacing: 1px;
+                transition: color 0.3s;
+            }
+
+                .nav-menu li a:hover {
+                    color: #a38b6d;
+                }
+
+        /* Кнопка бургер-меню */
+        .burger-btn {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 21px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            position: relative;
+            z-index: 100;
+        }
+
+        .burger-line {
+            display: block;
+            width: 100%;
+            height: 3px;
+            background: #3a3226;
+            transition: all 0.3s;
+        }
+
+        /* Бургер-меню */
+        .burger-menu {
+            position: fixed;
+            top: 0;
+            right: -300px;
+            width: 300px;
+            height: 100vh;
+            background: #fff;
+            box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+            padding: 80px 30px 30px;
+            transition: right 0.3s ease;
+            z-index: 90;
+        }
+
+            .burger-menu.show {
+                right: 0;
+            }
+
+        .burger-menu-item {
+            padding: 15px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+            .burger-menu-item a {
+                color: #3a3226;
+                text-decoration: none;
+                font-size: 16px;
+                display: block;
+            }
+
+        .auth-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin-top: 20px;
+            background: #3a3226;
+            color: white;
+            border: none;
+            text-align: center;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+            .auth-btn:hover {
+                background: #a38b6d;
+            }
+
+        /* Затемнение фона */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 80;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+
+            .overlay.show {
+                opacity: 1;
+                visibility: visible;
+            }
+
+        /* Main Content */
+        .page-header {
+            text-align: center;
+            margin: 60px 0 40px;
+        }
+
+        .page-title {
+            font-size: 36px;
+            font-weight: 300;
+            letter-spacing: 3px;
+            margin-bottom: 15px;
+        }
+
+        .page-subtitle {
+            font-size: 18px;
+            color: #a38b6d;
+            letter-spacing: 2px;
+        }
+
+        /* Menu Content */
+        .menu-container {
+            margin: 50px 0;
+        }
+
+        .menu-section {
+            margin-bottom: 50px;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 400;
+            color: #a38b6d;
+            border-bottom: 1px solid #d9d2c5;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+
+        .menu-items {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px dashed #d9d2c5;
+        }
+
+        .item-name {
+            font-weight: 400;
+        }
+
+        .item-price {
+            font-weight: 500;
+            color: #a38b6d;
+        }
+
+        .item-description {
+            grid-column: 1 / -1;
+            font-size: 14px;
+            color: #666;
+            margin-top: 5px;
+            line-height: 1.5;
+        }
+
+        /* Footer */
+        .site-footer {
+            background-color: #3a3226;
+            color: white;
+            padding: 50px 0 20px;
+            border-top: 1px solid #d9d2c5;
+            font-size: 14px;
+            width: 100%;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .footer-about,
+        .footer-contacts,
+        .footer-legal {
+            padding: 0 15px;
+        }
+
+        .site-footer h4 {
+            color: #a38b6d;
+            margin-bottom: 20px;
+            font-size: 18px;
+            letter-spacing: 1px;
+        }
+
+        .site-footer p {
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .contact-item {
+            margin-bottom: 12px;
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #d9d2c5;
+        }
+
+        .footer-copyright {
+            color: #666;
+            font-size: 13px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 20px;
+        }
+
+            .footer-links a {
+                color: #666;
+                text-decoration: none;
+                font-size: 13px;
+                transition: color 0.3s;
+            }
+
+                .footer-links a:hover {
+                    color: #a38b6d;
+                }
+
+        /* Responsive */
+        @@media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            nav {
+                position: static;
+                transform: none;
+            }
+
+            .nav-menu {
+                gap: 20px;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="logo-container">
+                <img src="logotip.png" alt="Логотип ECHO COFFEE" class="logo-img">
+                <div class="logo-text">ECHO <span>COFFEE</span></div>
+            </div>
+
+            <!-- Центральное меню -->
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="/">ГЛАВНАЯ</a></li>
+                    <li><a href="/menu">МЕНЮ</a></li>
+                    <li><a href="/contacts">КОНТАКТЫ</a></li>
+                </ul>
+            </nav>
+
+            <!-- Кнопка бургера -->
+            <button class="burger-btn" @onclick="ToggleBurgerMenu">
+                <span class="burger-line"></span>
+                <span class="burger-line"></span>
+                <span class="burger-line"></span>
+            </button>
+        </header>
+
+        <!-- Бургер-меню -->
+        <div class="burger-menu @(isBurgerMenuOpen ? "show" : "")">
+            <div class="burger-menu-item">
+                <a href="#" @onclick='() => NavigateTo("profile")'>Профиль</a>
+            </div>
+            <div class="burger-menu-item">
+                <a href="#" @onclick='() => NavigateTo("settings")'>Настройки</a>
+            </div>
+            <button class="auth-btn" @onclick='() => NavigateTo("login")'>АВТОРИЗАЦИЯ</button>
+        </div>
+
+        <!-- Затемнение фона -->
+        <div class="overlay @(isBurgerMenuOpen ? "show" : "")" @onclick="ToggleBurgerMenu"></div>
+
+        <!-- Page Content -->
+        <main>
+            <div class="page-header">
+                <h1 class="page-title">ПОЛНОЕ МЕНЮ</h1>
+                <p class="page-subtitle">ВСЕ НАШИ НАПИТКИ В ОДНОМ МЕСТЕ</p>
+            </div>
+
+            <div class="menu-container">
+                <!-- Кофе -->
+                <div class="menu-section">
+                    <h2 class="section-title">КОФЕ</h2>
+                    <div class="menu-items">
+                        <div class="menu-item">
+                            <span class="item-name">Эспрессо</span>
+                            <span class="item-price">250 ₽</span>
+                        </div>
+                        <div class="menu-item">
+                            <span class="item-name">Американо</span>
+                            <span class="item-price">280 ₽</span>
+                        </div>
+                        <div class="menu-item">
+                            <span class="item-name">Капучино</span>
+                            <span class="item-price">320 ₽</span>
+                        </div>
+                        <div class="menu-item">
+                            <span class="item-name">Латте</span>
+                            <span class="item-price">340 ₽</span>
+                        </div>
+                        <div class="menu-item">
+                            <span class="item-name">Флэт Уайт</span>
+                            <span class="item-price">350 ₽</span>
+                        </div>
+                        <div class="menu-item">
+                            <span class="item-name">Раф</span>
+                            <span class="item-price">370 ₽</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Авторские чаи -->
+                <div class="menu-section">
+                    <h2 class="section-title">АВТОРСКИЕ ЧАИ</h2>
+                    <div class="menu-items">
+                        <div class="menu-item">
+                            <span class="item-name">Имбирный чай с медом</span>
+                            <span class="item-price">320 ₽</span>
+                        </div>
+                        <div class="item-description">Ароматный черный чай с имбирем, медом и лимоном</div>
+
+                        <div class="menu-item">
+                            <span class="item-name">Мятный улун лайм</span>
+                            <span class="item-price">380 ₽</span>
+                        </div>
+                        <div class="item-description">Освежающий улун с мятой и лаймом, с легкими цветочными нотами</div>
+
+                        <div class="menu-item">
+                            <span class="item-name">Цитрусовый ройбуш</span>
+                            <span class="item-price">290 ₽</span>
+                        </div>
+                        <div class="item-description">Насыщенный ройбуш с апельсином, лимоном и специями</div>
+
+                        <div class="menu-item">
+                            <span class="item-name">Ягодный чай гибискус</span>
+                            <span class="item-price">270 ₽</span>
+                        </div>
+                        <div class="item-description">Яркий кисло-сладкий напиток из гибискуса с малиной и смородиной</div>
+                    </div>
+                </div>
+
+                <!-- Весна-Лето -->
+                <div class="menu-section">
+                    <h2 class="section-title">ВЕСНА-ЛЕТО</h2>
+                    <div class="menu-items">
+                        <div class="menu-item">
+                            <span class="item-name">Клубничный раф</span>
+                            <span class="item-price">390 ₽</span>
+                        </div>
+                        <div class="item-description">Нежный раф с клубничным пюре и ванильным сиропом</div>
+
+                        <div class="menu-item">
+                            <span class="item-name">Кокосовый айс кофе</span>
+                            <span class="item-price">350 ₽</span>
+                        </div>
+                        <div class="item-description">Освежающий холодный кофе с кокосовым молоком</div>
+
+                        <div class="menu-item">
+                            <span class="item-name">Лавандовый латте</span>
+                            <span class="item-price">370 ₽</span>
+                        </div>
+                        <div class="item-description">Ароматный латте с лавандовым сиропом</div>
+
+                        <div class="menu-item">
+                            <span class="item-name">Лимонный тоник</span>
+                            <span class="item-price">320 ₽</span>
+                        </div>
+                        <div class="item-description">Бодрящий эспрессо с тоником и лимоном</div>
+
+                        <div class="menu-item">
+                            <span class="item-name">Малиновый фраппучино</span>
+                            <span class="item-price">410 ₽</span>
+                        </div>
+                        <div class="item-description">Освежающий фраппучино с малиновым пюре</div>
+
+                        <div class="menu-item">
+                            <span class="item-name">Матча латте</span>
+                            <span class="item-price">380 ₽</span>
+                        </div>
+                        <div class="item-description">Традиционный японский чай матча с молоком</div>
+
+                        <div class="menu-item">
+                            <span class="item-name">Огуречно-мятный лимонад</span>
+                            <span class="item-price">290 ₽</span>
+                        </div>
+                        <div class="item-description">Освежающий лимонад с огурцом, мятой и лаймом</div>
+
+                        <div class="menu-item">
+                            <span class="item-name">Персиковый чай</span>
+                            <span class="item-price">310 ₽</span>
+                        </div>
+                        <div class="item-description">Ароматный холодный чай с персиковым сиропом</div>
+                    </div>
+                </div>
+
+                <!-- Фирменное меню -->
+                <div class="menu-section">
+                    <h2 class="section-title">ФИРМЕННОЕ МЕНЮ</h2>
+                    <div class="menu-items">
+                        <div class="menu-item">
+                            <span class="item-name">Ягодный лимонад с матчей</span>
+                            <span class="item-price">420 ₽</span>
+                        </div>
+                        <div class="item-description">Освежающий лимонад с ягодным миксом и порошком матча</div>
+
+                        <div class="menu-item">
+                            <span class="item-name">Мокко из Шварцвальда</span>
+                            <span class="item-price">450 ₽</span>
+                        </div>
+                        <div class="item-description">Насыщенный мокко с вишневым сиропом и черным шоколадом</div>
+
+                        <div class="menu-item">
+                            <span class="item-name">Эхо карамельного облака</span>
+                            <span class="item-price">390 ₽</span>
+                        </div>
+                        <div class="item-description">Воздушный латте с карамельным сиропом и ванильной пеной</div>
+
+                        <div class="menu-item">
+                            <span class="item-name">Латте с медом и корицей</span>
+                            <span class="item-price">370 ₽</span>
+                        </div>
+                        <div class="item-description">Традиционный латте с натуральным медом и корицей</div>
+
+                        <div class="menu-item">
+                            <span class="item-name">Апельсиновый тоник для эспрессо</span>
+                            <span class="item-price">350 ₽</span>
+                        </div>
+                        <div class="item-description">Энергичный эспрессо с тоником и апельсиновым сиропом</div>
+
+                        <div class="menu-item">
+                            <span class="item-name">Латте с фисташковым кремом</span>
+                            <span class="item-price">430 ₽</span>
+                        </div>
+                        <div class="item-description">Нежный латте с фисташковым сиропом и воздушным кремом</div>
+
+                        <div class="menu-item">
+                            <span class="item-name">Холодный напиток из соленых ирисок</span>
+                            <span class="item-price">380 ₽</span>
+                        </div>
+                        <div class="item-description">Молочный напиток со вкусом соленой карамели</div>
+
+                        <div class="menu-item">
+                            <span class="item-name">Латте с дымчатым кленом</span>
+                            <span class="item-price">410 ₽</span>
+                        </div>
+                        <div class="item-description">Уникальный латте с кленовым сиропом и дымчатым ароматом</div>
+                    </div>
+                </div>
+
+                <!-- Десерты -->
+                <div class="menu-section">
+                    <h2 class="section-title">ДЕСЕРТЫ</h2>
+                    <div class="menu-items">
+                        <div class="menu-item">
+                            <span class="item-name">Круассан классический</span>
+                            <span class="item-price">220 ₽</span>
+                        </div>
+
+                        <div class="menu-item">
+                            <span class="item-name">Круассан с миндальным кремом</span>
+                            <span class="item-price">280 ₽</span>
+                        </div>
+
+                        <div class="menu-item">
+                            <span class="item-name">Чизкейк Нью-Йорк</span>
+                            <span class="item-price">350 ₽</span>
+                        </div>
+
+                        <div class="menu-item">
+                            <span class="item-name">Тирамису</span>
+                            <span class="item-price">370 ₽</span>
+                        </div>
+
+                        <div class="menu-item">
+                            <span class="item-name">Маффин шоколадный</span>
+                            <span class="item-price">250 ₽</span>
+                        </div>
+
+                        <div class="menu-item">
+                            <span class="item-name">Панна котта с ягодным соусом</span>
+                            <span class="item-price">320 ₽</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-about">
+                    <h4>О НАС</h4>
+                    <p>
+                        ECHO COFFEE — сеть кофеен премиум-класса, основанная в 2015 году.
+                        Мы тщательно отбираем зерна с лучших плантаций мира и обжариваем их
+                        по уникальной технологии. Наши бариста — настоящие профессионалы,
+                        прошедшие обучение у чемпионов мировых чемпионатов бариста.
+                    </p>
+                </div>
+
+                <div class="footer-contacts">
+                    <h4>КОНТАКТЫ</h4>
+                    <div class="contact-item">
+                        <strong>Телефон:</strong> +7 (800) 555-12-34
+                    </div>
+                    <div class="contact-item">
+                        <strong>Email:</strong> info@echo-coffee.com
+                    </div>
+                    <div class="contact-item">
+                        <strong>Адрес:</strong> г. Череповец, Советский пр. 8
+                    </div>
+                    <div class="contact-item">
+                        <strong>Часы работы:</strong> Ежедневно 8:00–22:00
+                    </div>
+                </div>
+
+                <div class="footer-legal">
+                    <h4>ЮРИДИЧЕСКАЯ ИНФОРМАЦИЯ</h4>
+                    <p>
+                        ООО "ЭХО КОФЕ"<br>
+                        ИНН 1234567890<br>
+                        ОГРН 1234567890123<br>
+                        Юр. адрес: 162600, Россия, Вологодская обл.,<br>
+                        г. Череповец, Советский пр. 8
+                    </p>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div class="footer-copyright">
+                    © @DateTime.Now.Year ECHO COFFEE. Все права защищены.
+                </div>
+                <div class="footer-links">
+                    <a href="/privacy">Политика конфиденциальности</a>
+                    <a href="/terms">Условия использования</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
+
+@code {
+    private bool isBurgerMenuOpen = false;
+
+    private void ToggleBurgerMenu()
+    {
+        isBurgerMenuOpen = !isBurgerMenuOpen;
+    }
+
+    private void NavigateTo(string page)
+    {
+        Navigation.NavigateTo($"/{page}");
+        isBurgerMenuOpen = false;
+    }
+}

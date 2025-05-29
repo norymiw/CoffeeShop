@@ -1,4 +1,4 @@
-@page "/"
+﻿@page "/settings"
 @inject NavigationManager Navigation
 
 <!DOCTYPE html>
@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ECHO COFFEE</title>
+    <title>Настройки - ECHO COFFEE</title>
     <style>
         * {
             margin: 0;
@@ -29,14 +29,6 @@
             margin: 0 auto;
             padding: 0 20px;
             flex: 1;
-        }
-
-        /* Full width image section */
-        .full-width-image {
-            width: 100%;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
         }
 
         /* Header */
@@ -192,124 +184,160 @@
                 visibility: visible;
             }
 
-        /* Main Content */
-        .main-title {
-            text-align: center;
-            margin: 70px 0 70px;
+        /* Основное содержимое страницы настроек */
+        .settings-container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 30px;
+            background: white;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.05);
         }
 
-            .main-title h1 {
-                font-size: 48px;
-                font-weight: 300;
-                letter-spacing: 3px;
-                margin-bottom: 10px;
-            }
-
-        .main-image {
-            width: 100%;
-            height: auto;
-            max-height: 60vh;
-            object-fit: cover;
-            display: block;
-        }
-
-        .main-subtitle {
-            text-align: center;
-            font-size: 18px;
+        .settings-title {
+            font-size: 28px;
             font-weight: 300;
-            letter-spacing: 8px;
-            color: #a38b6d;
-            margin: 20px 0 60px;
-        }
-
-        /* Menu Section */
-        .season {
-            text-align: center;
-            font-size: 18px;
-            letter-spacing: 3px;
-            color: #a38b6d;
-            margin-bottom: 50px;
-            position: relative;
-        }
-
-            .season:after {
-                content: "";
-                display: block;
-                width: 100px;
-                height: 1px;
-                background: #d9d2c5;
-                margin: 20px auto;
-            }
-
-        .menu-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 30px;
+            letter-spacing: 2px;
             margin-bottom: 30px;
-        }
-
-        .menu-item {
-            background: #fff;
-            padding: 35px;
+            color: #3a3226;
             text-align: center;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
-            transition: transform 0.3s;
-            cursor: pointer;
         }
 
-            .menu-item:hover {
-                transform: translateY(-5px);
-            }
-
-        .menu-grid.center-last {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 30px;
-            margin-bottom: 0;
+        .settings-section {
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #f0f0f0;
         }
 
-            .menu-grid.center-last .full-row {
-                grid-column: 1 / -1;
-                display: flex;
-                justify-content: center;
+            .settings-section:last-child {
+                border-bottom: none;
+                margin-bottom: 0;
+                padding-bottom: 0;
             }
 
-            .menu-grid.center-last .wide-item {
-                width: 80%;
-                max-width: 600px;
-                margin: 0 auto;
-            }
-
-        .menu-item h3 {
-            font-size: 20px;
+        .section-title {
+            font-size: 18px;
             font-weight: 400;
+            color: #a38b6d;
+            margin-bottom: 20px;
             letter-spacing: 1px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #3a3226;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #d9d2c5;
+            background: #f8f5f0;
+            font-size: 16px;
+            transition: border 0.3s;
+        }
+
+            .form-input:focus {
+                outline: none;
+                border-color: #a38b6d;
+            }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
             margin-bottom: 15px;
         }
 
-        /* Contacts */
-        .contacts {
-            text-align: center;
-            margin: 100px 0;
+        .checkbox-input {
+            margin-right: 10px;
         }
 
-            .contacts h2 {
-                font-size: 24px;
-                font-weight: 300;
-                letter-spacing: 2px;
-                margin-bottom: 40px;
-            }
+        .checkbox-label {
+            font-size: 14px;
+            color: #3a3226;
+        }
 
-        .map-container {
-            height: 400px;
-            background: #e8e3db;
+        .radio-group {
+            margin-bottom: 15px;
+        }
+
+        .radio-option {
             display: flex;
             align-items: center;
-            justify-content: center;
-            color: #a38b6d;
-            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .radio-input {
+            margin-right: 10px;
+        }
+
+        .radio-label {
+            font-size: 14px;
+            color: #3a3226;
+        }
+
+        .select-wrapper {
+            position: relative;
+        }
+
+        .form-select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #d9d2c5;
+            background: #f8f5f0;
+            font-size: 16px;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: 1em;
+        }
+
+            .form-select:focus {
+                outline: none;
+                border-color: #a38b6d;
+            }
+
+        .settings-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
             margin-top: 30px;
         }
+
+        .btn {
+            padding: 12px 25px;
+            font-size: 14px;
+            letter-spacing: 1px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: #3a3226;
+            color: white;
+        }
+
+            .btn-primary:hover {
+                background: #a38b6d;
+            }
+
+        .btn-secondary {
+            background: #d9d2c5;
+            color: #3a3226;
+        }
+
+            .btn-secondary:hover {
+                background: #c0b7a7;
+            }
 
         /* Footer */
         .site-footer {
@@ -403,17 +431,17 @@
                 gap: 15px;
             }
 
-            .menu-grid {
-                grid-template-columns: 1fr;
+            .settings-container {
+                padding: 20px;
+                margin: 30px auto;
             }
 
-            .main-image {
-                max-height: 40vh;
+            .settings-buttons {
+                flex-direction: column;
             }
 
-            .main-subtitle {
-                letter-spacing: 4px;
-                margin: 10px 0 40px;
+            .btn {
+                width: 100%;
             }
 
             .footer-grid {
@@ -475,58 +503,115 @@
         <div class="overlay @(isBurgerMenuOpen ? "show" : "")" @onclick="ToggleBurgerMenu"></div>
     </div>
 
-    <!-- Main Content -->
+    <!-- Основное содержимое страницы настроек -->
     <main>
         <div class="container">
-            <div class="main-title">
-                <h1>ECHO COFFEE</h1>
-            </div>
-        </div>
+            <div class="settings-container">
+                <h1 class="settings-title">НАСТРОЙКИ ПРОФИЛЯ</h1>
 
-        <!-- Изображение на всю ширину вне контейнера -->
-        <div class="full-width-image">
-            <img src="coffee.png" alt="Кофе ECHO COFFEE" class="main-image">
-        </div>
+                <!-- Личная информация -->
+                <div class="settings-section">
+                    <h2 class="section-title">ЛИЧНАЯ ИНФОРМАЦИЯ</h2>
 
-        <div class="container">
-            <div class="main-title">
-                <p class="main-subtitle">INFO</p>
-            </div>
+                    <div class="form-group">
+                        <label class="form-label">Имя</label>
+                        <input type="text" class="form-input" value="Алексей">
+                    </div>
 
-            <div class="season"></div>
+                    <div class="form-group">
+                        <label class="form-label">Фамилия</label>
+                        <input type="text" class="form-input" value="Иванов">
+                    </div>
 
-            <div class="menu-grid center-last">
-                <div class="menu-item" @onclick='() => NavigateTo("spring-summer")'>
-                    <h3>ВЕСНА-ЛЕТО</h3>
-                </div>
-                <div class="menu-item" @onclick='() => NavigateTo("signature-menu")'>
-                    <h3>ФИРМЕННОЕ МЕНЮ</h3>
-                </div>
-                <div class="menu-item" @onclick='() => NavigateTo("tea")'>
-                    <h3>АВТОРСКИЕ ЧАИ</h3>
-                </div>
-                <div class="menu-item" @onclick='() => NavigateTo("classic-menu")'>
-                    <h3>КЛАССИЧЕСКОЕ МЕНЮ</h3>
-                </div>
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-input" value="alexey@example.com">
+                    </div>
 
-                <!-- Широкая центрированная карточка -->
-                <div class="full-row">
-                    <div class="menu-item wide-item" @onclick='() => NavigateTo("cold-drinks")'>
-                        <h3>ХОЛОДНЫЕ НАПИТКИ</h3>
+                    <div class="form-group">
+                        <label class="form-label">Телефон</label>
+                        <input type="tel" class="form-input" value="+7 (900) 123-45-67">
                     </div>
                 </div>
-            </div>
 
-            <div class="contacts">
-                <h2>КОНТАКТЫ</h2>
-                <div class="map-container">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d860.9596763723843!2d37.93106963317104!3d59.12037464091203!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46afb7b3b89dc133%3A0x3270485ad5f20a5d!2z0KPRh9C10LHQvdGL0Lkg0LrQvtGA0L_Rg9GBIOKEliAxINCn0JPQow!5e0!3m2!1sru!2sru!4v1747484361430!5m2!1sru!2sru"
-                            width="100%"
-                            height="400"
-                            style="border:0;"
-                            allowfullscreen=""
-                            loading="lazy"
-                            referrerpolicy="no-referrer-when-downgrade"></iframe>
+                <!-- Настройки уведомлений -->
+                <div class="settings-section">
+                    <h2 class="section-title">УВЕДОМЛЕНИЯ</h2>
+
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="email-notifications" class="checkbox-input" checked>
+                        <label for="email-notifications" class="checkbox-label">Email-уведомления</label>
+                    </div>
+
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="sms-notifications" class="checkbox-input">
+                        <label for="sms-notifications" class="checkbox-label">SMS-уведомления</label>
+                    </div>
+
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="promo-offers" class="checkbox-input" checked>
+                        <label for="promo-offers" class="checkbox-label">Специальные предложения</label>
+                    </div>
+                </div>
+
+                <!-- Настройки приложения -->
+                <div class="settings-section">
+                    <h2 class="section-title">НАСТРОЙКИ ПРИЛОЖЕНИЯ</h2>
+
+                    <div class="form-group">
+                        <label class="form-label">Язык</label>
+                        <div class="select-wrapper">
+                            <select class="form-select">
+                                <option selected>Русский</option>
+                                <option>English</option>
+                                <option>Español</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Тема</label>
+                        <div class="radio-group">
+                            <div class="radio-option">
+                                <input type="radio" id="light-theme" name="theme" class="radio-input" checked>
+                                <label for="light-theme" class="radio-label">Светлая</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="dark-theme" name="theme" class="radio-input">
+                                <label for="dark-theme" class="radio-label">Темная</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="system-theme" name="theme" class="radio-input">
+                                <label for="system-theme" class="radio-label">Как в системе</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Безопасность -->
+                <div class="settings-section">
+                    <h2 class="section-title">БЕЗОПАСНОСТЬ</h2>
+
+                    <div class="form-group">
+                        <label class="form-label">Текущий пароль</label>
+                        <input type="password" class="form-input">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Новый пароль</label>
+                        <input type="password" class="form-input">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Подтвердите новый пароль</label>
+                        <input type="password" class="form-input">
+                    </div>
+                </div>
+
+                <!-- Кнопки действий -->
+                <div class="settings-buttons">
+                    <button class="btn btn-secondary" @onclick='() => NavigateTo("profile")'>ОТМЕНА</button>
+                    <button class="btn btn-primary" @onclick="SaveSettings">СОХРАНИТЬ</button>
                 </div>
             </div>
         </div>
@@ -601,6 +686,15 @@
                 ToggleBurgerMenu();
             }
             Navigation.NavigateTo($"/{page.ToLower()}", forceLoad: true);
+        }
+
+        private void SaveSettings()
+        {
+            // Здесь будет логика сохранения настроек
+            // Можно добавить вызов API или сохранение в локальное хранилище
+
+            // После сохранения можно перенаправить пользователя
+            Navigation.NavigateTo("/profile");
         }
     }
 </body>

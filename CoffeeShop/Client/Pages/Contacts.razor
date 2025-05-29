@@ -1,4 +1,4 @@
-@page "/"
+﻿@page "/contacts"
 @inject NavigationManager Navigation
 
 <!DOCTYPE html>
@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ECHO COFFEE</title>
+    <title>ECHO COFFEE - Контакты</title>
     <style>
         * {
             margin: 0;
@@ -29,14 +29,6 @@
             margin: 0 auto;
             padding: 0 20px;
             flex: 1;
-        }
-
-        /* Full width image section */
-        .full-width-image {
-            width: 100%;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
         }
 
         /* Header */
@@ -192,124 +184,165 @@
                 visibility: visible;
             }
 
-        /* Main Content */
-        .main-title {
-            text-align: center;
-            margin: 70px 0 70px;
+        /* Контакты */
+        .contacts-page {
+            padding: 80px 0 100px;
         }
 
-            .main-title h1 {
-                font-size: 48px;
+        .page-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+            .page-title h1 {
+                font-size: 36px;
                 font-weight: 300;
                 letter-spacing: 3px;
-                margin-bottom: 10px;
+                margin-bottom: 15px;
             }
 
-        .main-image {
-            width: 100%;
-            height: auto;
-            max-height: 60vh;
-            object-fit: cover;
-            display: block;
-        }
-
-        .main-subtitle {
-            text-align: center;
-            font-size: 18px;
-            font-weight: 300;
-            letter-spacing: 8px;
-            color: #a38b6d;
-            margin: 20px 0 60px;
-        }
-
-        /* Menu Section */
-        .season {
-            text-align: center;
-            font-size: 18px;
-            letter-spacing: 3px;
-            color: #a38b6d;
-            margin-bottom: 50px;
-            position: relative;
-        }
-
-            .season:after {
-                content: "";
-                display: block;
-                width: 100px;
-                height: 1px;
-                background: #d9d2c5;
-                margin: 20px auto;
-            }
-
-        .menu-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 30px;
-            margin-bottom: 30px;
-        }
-
-        .menu-item {
-            background: #fff;
-            padding: 35px;
-            text-align: center;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
-            transition: transform 0.3s;
-            cursor: pointer;
-        }
-
-            .menu-item:hover {
-                transform: translateY(-5px);
-            }
-
-        .menu-grid.center-last {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 30px;
-            margin-bottom: 0;
-        }
-
-            .menu-grid.center-last .full-row {
-                grid-column: 1 / -1;
-                display: flex;
-                justify-content: center;
-            }
-
-            .menu-grid.center-last .wide-item {
-                width: 80%;
-                max-width: 600px;
-                margin: 0 auto;
-            }
-
-        .menu-item h3 {
-            font-size: 20px;
-            font-weight: 400;
-            letter-spacing: 1px;
-            margin-bottom: 15px;
-        }
-
-        /* Contacts */
-        .contacts {
-            text-align: center;
-            margin: 100px 0;
-        }
-
-            .contacts h2 {
-                font-size: 24px;
-                font-weight: 300;
+            .page-title p {
+                font-size: 16px;
+                color: #a38b6d;
                 letter-spacing: 2px;
-                margin-bottom: 40px;
             }
 
-        .map-container {
-            height: 400px;
-            background: #e8e3db;
+        .contacts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .contact-info {
+            background: #fff;
+            padding: 40px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.05);
+        }
+
+            .contact-info h3 {
+                font-size: 22px;
+                font-weight: 400;
+                letter-spacing: 1px;
+                margin-bottom: 25px;
+                color: #a38b6d;
+            }
+
+        .contact-item {
+            margin-bottom: 20px;
+        }
+
+            .contact-item strong {
+                display: block;
+                font-weight: 500;
+                margin-bottom: 5px;
+            }
+
+            .contact-item p {
+                font-size: 16px;
+                line-height: 1.6;
+            }
+
+        .social-links {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #a38b6d;
-            font-size: 18px;
+            gap: 15px;
             margin-top: 30px;
         }
+
+            .social-links a {
+                display: inline-block;
+                width: 40px;
+                height: 40px;
+                background: #3a3226;
+                color: white;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: background 0.3s;
+            }
+
+                .social-links a:hover {
+                    background: #a38b6d;
+                }
+
+        .map-container {
+            height: 500px;
+            margin-top: 40px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.05);
+        }
+
+            .map-container iframe {
+                width: 100%;
+                height: 100%;
+                border: none;
+            }
+
+        /* Форма обратной связи */
+        .contact-form {
+            background: #fff;
+            padding: 40px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.05);
+            margin-top: 60px;
+        }
+
+            .contact-form h3 {
+                font-size: 22px;
+                font-weight: 400;
+                letter-spacing: 1px;
+                margin-bottom: 25px;
+                color: #a38b6d;
+                text-align: center;
+            }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+            .form-group label {
+                display: block;
+                margin-bottom: 8px;
+                font-size: 14px;
+                color: #3a3226;
+            }
+
+            .form-group input,
+            .form-group textarea {
+                width: 100%;
+                padding: 12px 15px;
+                border: 1px solid #d9d2c5;
+                background: #f8f5f0;
+                font-size: 16px;
+                transition: border 0.3s;
+            }
+
+                .form-group input:focus,
+                .form-group textarea:focus {
+                    border-color: #a38b6d;
+                    outline: none;
+                }
+
+            .form-group textarea {
+                height: 150px;
+                resize: vertical;
+            }
+
+        .submit-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: #3a3226;
+            color: white;
+            border: none;
+            font-size: 16px;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+            .submit-btn:hover {
+                background: #a38b6d;
+            }
 
         /* Footer */
         .site-footer {
@@ -349,10 +382,6 @@
         .site-footer p {
             line-height: 1.6;
             margin-bottom: 15px;
-        }
-
-        .contact-item {
-            margin-bottom: 12px;
         }
 
         .footer-bottom {
@@ -403,17 +432,12 @@
                 gap: 15px;
             }
 
-            .menu-grid {
+            .contacts-grid {
                 grid-template-columns: 1fr;
             }
 
-            .main-image {
-                max-height: 40vh;
-            }
-
-            .main-subtitle {
-                letter-spacing: 4px;
-                margin: 10px 0 40px;
+            .page-title h1 {
+                font-size: 28px;
             }
 
             .footer-grid {
@@ -475,59 +499,87 @@
         <div class="overlay @(isBurgerMenuOpen ? "show" : "")" @onclick="ToggleBurgerMenu"></div>
     </div>
 
-    <!-- Main Content -->
-    <main>
+    <!-- Основное содержимое страницы контактов -->
+    <main class="contacts-page">
         <div class="container">
-            <div class="main-title">
-                <h1>ECHO COFFEE</h1>
-            </div>
-        </div>
-
-        <!-- Изображение на всю ширину вне контейнера -->
-        <div class="full-width-image">
-            <img src="coffee.png" alt="Кофе ECHO COFFEE" class="main-image">
-        </div>
-
-        <div class="container">
-            <div class="main-title">
-                <p class="main-subtitle">INFO</p>
+            <div class="page-title">
+                <h1>КОНТАКТЫ</h1>
+                <p>СВЯЖИТЕСЬ С НАМИ</p>
             </div>
 
-            <div class="season"></div>
+            <div class="contacts-grid">
+                <div class="contact-info">
+                    <h3>НАШИ КОНТАКТЫ</h3>
+                    <div class="contact-item">
+                        <strong>Адрес</strong>
+                        <p>г. Череповец, Советский пр. 8</p>
+                    </div>
+                    <div class="contact-item">
+                        <strong>Телефон</strong>
+                        <p>+7 (800) 555-12-34</p>
+                    </div>
+                    <div class="contact-item">
+                        <strong>Email</strong>
+                        <p>info@echo-coffee.com</p>
+                    </div>
+                    <div class="contact-item">
+                        <strong>Часы работы</strong>
+                        <p>Пн-Пт: 8:00–22:00<br>Сб-Вс: 9:00–23:00</p>
+                    </div>
+                </div>
 
-            <div class="menu-grid center-last">
-                <div class="menu-item" @onclick='() => NavigateTo("spring-summer")'>
-                    <h3>ВЕСНА-ЛЕТО</h3>
-                </div>
-                <div class="menu-item" @onclick='() => NavigateTo("signature-menu")'>
-                    <h3>ФИРМЕННОЕ МЕНЮ</h3>
-                </div>
-                <div class="menu-item" @onclick='() => NavigateTo("tea")'>
-                    <h3>АВТОРСКИЕ ЧАИ</h3>
-                </div>
-                <div class="menu-item" @onclick='() => NavigateTo("classic-menu")'>
-                    <h3>КЛАССИЧЕСКОЕ МЕНЮ</h3>
-                </div>
-
-                <!-- Широкая центрированная карточка -->
-                <div class="full-row">
-                    <div class="menu-item wide-item" @onclick='() => NavigateTo("cold-drinks")'>
-                        <h3>ХОЛОДНЫЕ НАПИТКИ</h3>
+                <div class="contact-info">
+                    <h3>ФРАНЧАЙЗИНГ</h3>
+                    <div class="contact-item">
+                        <strong>Для партнеров</strong>
+                        <p>franchise@echo-coffee.com</p>
+                    </div>
+                    <div class="contact-item">
+                        <strong>Телефон</strong>
+                        <p>+7 (800) 555-56-78</p>
+                    </div>
+                    <div class="contact-item">
+                        <strong>Коммерческий директор</strong>
+                        <p>Иванов Иван Иванович</p>
+                    </div>
+                    <div class="contact-item">
+                        <strong>Условия сотрудничества</strong>
+                        <p>Мы открыты к предложениям о сотрудничестве и развитию сети ECHO COFFEE в новых регионах.</p>
                     </div>
                 </div>
             </div>
 
-            <div class="contacts">
-                <h2>КОНТАКТЫ</h2>
-                <div class="map-container">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d860.9596763723843!2d37.93106963317104!3d59.12037464091203!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46afb7b3b89dc133%3A0x3270485ad5f20a5d!2z0KPRh9C10LHQvdGL0Lkg0LrQvtGA0L_Rg9GBIOKEliAxINCn0JPQow!5e0!3m2!1sru!2sru!4v1747484361430!5m2!1sru!2sru"
-                            width="100%"
-                            height="400"
-                            style="border:0;"
-                            allowfullscreen=""
-                            loading="lazy"
-                            referrerpolicy="no-referrer-when-downgrade"></iframe>
-                </div>
+            <div class="map-container">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d860.9596763723843!2d37.93106963317104!3d59.12037464091203!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46afb7b3b89dc133%3A0x3270485ad5f20a5d!2z0KPRh9C10LHQvdGL0Lkg0LrQvtGA0L_Rg9GBIOKEliAxINCn0JPQow!5e0!3m2!1sru!2sru!4v1747484361430!5m2!1sru!2sru"
+                        width="100%"
+                        height="100%"
+                        style="border:0;"
+                        allowfullscreen=""
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+
+            <div class="contact-form">
+                <h3>ФОРМА ОБРАТНОЙ СВЯЗИ</h3>
+                <form>
+                    <div class="form-group">
+                        <label for="name">Ваше имя</label>
+                        <input type="text" id="name" placeholder="Введите ваше имя">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" placeholder="Введите ваш email">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Телефон</label>
+                        <input type="tel" id="phone" placeholder="Введите ваш телефон">
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Сообщение</label>
+                        <textarea id="message" placeholder="Введите ваше сообщение"></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">ОТПРАВИТЬ</button>
+                </form>
             </div>
         </div>
     </main>
@@ -541,8 +593,7 @@
                     <p>
                         ECHO COFFEE — сеть кофеен премиум-класса, основанная в 2015 году.
                         Мы тщательно отбираем зерна с лучших плантаций мира и обжариваем их
-                        по уникальной технологии. Наши бариста — настоящие профессионалы,
-                        прошедшие обучение у чемпионов мировых чемпионатов бариста.
+                        по уникальной технологии.
                     </p>
                 </div>
 
@@ -557,9 +608,6 @@
                     <div class="contact-item">
                         <strong>Адрес:</strong> г. Череповец, Советский пр. 8
                     </div>
-                    <div class="contact-item">
-                        <strong>Часы работы:</strong> Ежедневно 8:00–22:00
-                    </div>
                 </div>
 
                 <div class="footer-legal">
@@ -567,21 +615,19 @@
                     <p>
                         ООО "ЭХО КОФЕ"<br>
                         ИНН 1234567890<br>
-                        ОГРН 1234567890123<br>
-                        Юр. адрес: 162600, Россия, Вологодская обл.,<br>
-                        г. Череповец, Советский пр. 8
+                        ОГРН 1234567890123
                     </p>
                 </div>
             </div>
-        </div>
 
-        <div class="footer-bottom">
-            <div class="footer-copyright">
-                © @DateTime.Now.Year ECHO COFFEE. Все права защищены.
-            </div>
-            <div class="footer-links">
-                <a href="/privacy">Политика конфиденциальности</a>
-                <a href="/terms">Условия использования</a>
+            <div class="footer-bottom">
+                <div class="footer-copyright">
+                    © @DateTime.Now.Year ECHO COFFEE. Все права защищены.
+                </div>
+                <div class="footer-links">
+                    <a href="/privacy">Политика конфиденциальности</a>
+                    <a href="/terms">Условия использования</a>
+                </div>
             </div>
         </div>
     </footer>

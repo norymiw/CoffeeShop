@@ -1,4 +1,4 @@
-@page "/"
+﻿@page "/spring-summer"
 @inject NavigationManager Navigation
 
 <!DOCTYPE html>
@@ -6,7 +6,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ECHO COFFEE</title>
+    <link rel="icon" href="logotip.png" type="image/png">
+    <title>ECHO COFFEE - Весна-Лето</title>
     <style>
         * {
             margin: 0;
@@ -29,14 +30,6 @@
             margin: 0 auto;
             padding: 0 20px;
             flex: 1;
-        }
-
-        /* Full width image section */
-        .full-width-image {
-            width: 100%;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
         }
 
         /* Header */
@@ -95,7 +88,6 @@
                 font-weight: 400;
                 letter-spacing: 1px;
                 transition: color 0.3s;
-                cursor: pointer;
             }
 
                 .nav-menu li a:hover {
@@ -153,7 +145,6 @@
                 text-decoration: none;
                 font-size: 16px;
                 display: block;
-                cursor: pointer;
             }
 
         .auth-btn {
@@ -193,122 +184,110 @@
             }
 
         /* Main Content */
-        .main-title {
+        .page-header {
             text-align: center;
-            margin: 70px 0 70px;
+            margin: 60px 0 40px;
         }
 
-            .main-title h1 {
-                font-size: 48px;
-                font-weight: 300;
-                letter-spacing: 3px;
-                margin-bottom: 10px;
-            }
-
-        .main-image {
-            width: 100%;
-            height: auto;
-            max-height: 60vh;
-            object-fit: cover;
-            display: block;
-        }
-
-        .main-subtitle {
-            text-align: center;
-            font-size: 18px;
+        .page-title {
+            font-size: 36px;
             font-weight: 300;
-            letter-spacing: 8px;
-            color: #a38b6d;
-            margin: 20px 0 60px;
-        }
-
-        /* Menu Section */
-        .season {
-            text-align: center;
-            font-size: 18px;
             letter-spacing: 3px;
-            color: #a38b6d;
-            margin-bottom: 50px;
-            position: relative;
-        }
-
-            .season:after {
-                content: "";
-                display: block;
-                width: 100px;
-                height: 1px;
-                background: #d9d2c5;
-                margin: 20px auto;
-            }
-
-        .menu-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 30px;
-            margin-bottom: 30px;
-        }
-
-        .menu-item {
-            background: #fff;
-            padding: 35px;
-            text-align: center;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
-            transition: transform 0.3s;
-            cursor: pointer;
-        }
-
-            .menu-item:hover {
-                transform: translateY(-5px);
-            }
-
-        .menu-grid.center-last {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 30px;
-            margin-bottom: 0;
-        }
-
-            .menu-grid.center-last .full-row {
-                grid-column: 1 / -1;
-                display: flex;
-                justify-content: center;
-            }
-
-            .menu-grid.center-last .wide-item {
-                width: 80%;
-                max-width: 600px;
-                margin: 0 auto;
-            }
-
-        .menu-item h3 {
-            font-size: 20px;
-            font-weight: 400;
-            letter-spacing: 1px;
             margin-bottom: 15px;
         }
 
-        /* Contacts */
-        .contacts {
-            text-align: center;
-            margin: 100px 0;
+        .page-subtitle {
+            font-size: 18px;
+            color: #a38b6d;
+            letter-spacing: 2px;
         }
 
-            .contacts h2 {
-                font-size: 24px;
-                font-weight: 300;
-                letter-spacing: 2px;
-                margin-bottom: 40px;
+        /* Grid with drinks */
+        .drinks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            margin: 50px 0;
+            align-items: stretch;
+        }
+
+        .drink-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+            .drink-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
             }
 
-        .map-container {
-            height: 400px;
-            background: #e8e3db;
+        .drink-image-container {
+            width: 100%;
+            aspect-ratio: 1/1;
+            background: #f8f5f0;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #a38b6d;
+            overflow: hidden;
+        }
+
+        .drink-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .drink-info {
+            padding: 20px;
+            flex-grow: 1;
+        }
+
+        .drink-name {
+            font-size: 20px;
+            font-weight: 400;
+            margin-bottom: 10px;
+        }
+
+        .drink-description {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .nutrition-info {
+            margin-top: 10px;
+            font-size: 13px;
+            color: #666;
+            border-top: 1px solid #eee;
+            padding-top: 10px;
+        }
+
+        .nutrition-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 3px;
+        }
+
+        .nutrition-title {
+            font-weight: 500;
+        }
+
+        .nutrition-value {
+            color: #3a3226;
+        }
+
+        .drink-price {
             font-size: 18px;
-            margin-top: 30px;
+            color: #a38b6d;
+            font-weight: 500;
+            margin-top: 15px;
         }
 
         /* Footer */
@@ -318,6 +297,7 @@
             padding: 50px 0 20px;
             border-top: 1px solid #d9d2c5;
             font-size: 14px;
+            width: 100%;
         }
 
         .footer-content {
@@ -387,6 +367,10 @@
 
         /* Responsive */
         @@media (max-width: 768px) {
+            .drinks-grid {
+                grid-template-columns: 1fr;
+            }
+
             header {
                 flex-direction: column;
                 gap: 20px;
@@ -395,25 +379,10 @@
             nav {
                 position: static;
                 transform: none;
-                margin: 20px 0;
             }
 
             .nav-menu {
-                flex-direction: column;
-                gap: 15px;
-            }
-
-            .menu-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .main-image {
-                max-height: 40vh;
-            }
-
-            .main-subtitle {
-                letter-spacing: 4px;
-                margin: 10px 0 40px;
+                gap: 20px;
             }
 
             .footer-grid {
@@ -446,13 +415,13 @@
             <!-- Центральное меню -->
             <nav>
                 <ul class="nav-menu">
-                    <li><a @onclick='() => NavigateTo("company")' @onclick:preventDefault>КОМПАНИЯ</a></li>
-                    <li><a @onclick='() => NavigateTo("menu")' @onclick:preventDefault>МЕНЮ</a></li>
-                    <li><a @onclick='() => NavigateTo("contacts")' @onclick:preventDefault>КОНТАКТЫ</a></li>
+                    <li><a href="/">ГЛАВНАЯ</a></li>
+                    <li><a href="/menu">МЕНЮ</a></li>
+                    <li><a href="/contacts">КОНТАКТЫ</a></li>
                 </ul>
             </nav>
 
-            <!-- Кнопка бургер-меню -->
+            <!-- Кнопка бургера -->
             <button class="burger-btn" @onclick="ToggleBurgerMenu">
                 <span class="burger-line"></span>
                 <span class="burger-line"></span>
@@ -463,74 +432,61 @@
         <!-- Бургер-меню -->
         <div class="burger-menu @(isBurgerMenuOpen ? "show" : "")">
             <div class="burger-menu-item">
-                <a @onclick='() => { ToggleBurgerMenu(); NavigateTo("profile"); }' @onclick:preventDefault>Профиль</a>
+                <a href="#" @onclick='() => NavigateTo("profile")'>Профиль</a>
             </div>
             <div class="burger-menu-item">
-                <a @onclick='() => { ToggleBurgerMenu(); NavigateTo("settings"); }' @onclick:preventDefault>Настройки</a>
+                <a href="#" @onclick='() => NavigateTo("settings")'>Настройки</a>
             </div>
-            <button class="auth-btn" @onclick='() => { ToggleBurgerMenu(); NavigateTo("login"); }'>АВТОРИЗАЦИЯ</button>
+            <button class="auth-btn" @onclick='() => NavigateTo("login")'>АВТОРИЗАЦИЯ</button>
         </div>
 
         <!-- Затемнение фона -->
         <div class="overlay @(isBurgerMenuOpen ? "show" : "")" @onclick="ToggleBurgerMenu"></div>
-    </div>
 
-    <!-- Main Content -->
-    <main>
-        <div class="container">
-            <div class="main-title">
-                <h1>ECHO COFFEE</h1>
-            </div>
-        </div>
-
-        <!-- Изображение на всю ширину вне контейнера -->
-        <div class="full-width-image">
-            <img src="coffee.png" alt="Кофе ECHO COFFEE" class="main-image">
-        </div>
-
-        <div class="container">
-            <div class="main-title">
-                <p class="main-subtitle">INFO</p>
+        <!-- Page Content -->
+        <main>
+            <div class="page-header">
+                <h1 class="page-title">ВЕСНА-ЛЕТО</h1>
+                <p class="page-subtitle">ОСВЕЖАЮЩИЕ НАПИТКИ ДЛЯ ТЕПЛОГО СЕЗОНА</p>
             </div>
 
-            <div class="season"></div>
+            <div class="drinks-grid">
+                @foreach (var drink in drinks)
+                {
+                    <div class="drink-card">
+                        <div class="drink-image-container">
+                            <img src="@drink.ImageUrl" alt="@drink.Name" class="drink-image">
+                        </div>
+                        <div class="drink-info">
+                            <h3 class="drink-name">@drink.Name</h3>
+                            <p class="drink-description">@drink.Description</p>
 
-            <div class="menu-grid center-last">
-                <div class="menu-item" @onclick='() => NavigateTo("spring-summer")'>
-                    <h3>ВЕСНА-ЛЕТО</h3>
-                </div>
-                <div class="menu-item" @onclick='() => NavigateTo("signature-menu")'>
-                    <h3>ФИРМЕННОЕ МЕНЮ</h3>
-                </div>
-                <div class="menu-item" @onclick='() => NavigateTo("tea")'>
-                    <h3>АВТОРСКИЕ ЧАИ</h3>
-                </div>
-                <div class="menu-item" @onclick='() => NavigateTo("classic-menu")'>
-                    <h3>КЛАССИЧЕСКОЕ МЕНЮ</h3>
-                </div>
+                            <div class="nutrition-info">
+                                <div class="nutrition-row">
+                                    <span class="nutrition-title">Ккал:</span>
+                                    <span class="nutrition-value">@drink.Calories</span>
+                                </div>
+                                <div class="nutrition-row">
+                                    <span class="nutrition-title">Белки, г:</span>
+                                    <span class="nutrition-value">@drink.Protein.ToString("0.0")</span>
+                                </div>
+                                <div class="nutrition-row">
+                                    <span class="nutrition-title">Жиры, г:</span>
+                                    <span class="nutrition-value">@drink.Fat.ToString("0.0")</span>
+                                </div>
+                                <div class="nutrition-row">
+                                    <span class="nutrition-title">Углеводы, г:</span>
+                                    <span class="nutrition-value">@drink.Carbs.ToString("0.0")</span>
+                                </div>
+                            </div>
 
-                <!-- Широкая центрированная карточка -->
-                <div class="full-row">
-                    <div class="menu-item wide-item" @onclick='() => NavigateTo("cold-drinks")'>
-                        <h3>ХОЛОДНЫЕ НАПИТКИ</h3>
+                            <p class="drink-price">@drink.Price ₽</p>
+                        </div>
                     </div>
-                </div>
+                }
             </div>
-
-            <div class="contacts">
-                <h2>КОНТАКТЫ</h2>
-                <div class="map-container">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d860.9596763723843!2d37.93106963317104!3d59.12037464091203!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46afb7b3b89dc133%3A0x3270485ad5f20a5d!2z0KPRh9C10LHQvdGL0Lkg0LrQvtGA0L_Rg9GBIOKEliAxINCn0JPQow!5e0!3m2!1sru!2sru!4v1747484361430!5m2!1sru!2sru"
-                            width="100%"
-                            height="400"
-                            style="border:0;"
-                            allowfullscreen=""
-                            loading="lazy"
-                            referrerpolicy="no-referrer-when-downgrade"></iframe>
-                </div>
-            </div>
-        </div>
-    </main>
+        </main>
+    </div>
 
     <!-- Footer -->
     <footer class="site-footer">
@@ -573,35 +529,137 @@
                     </p>
                 </div>
             </div>
-        </div>
 
-        <div class="footer-bottom">
-            <div class="footer-copyright">
-                © @DateTime.Now.Year ECHO COFFEE. Все права защищены.
-            </div>
-            <div class="footer-links">
-                <a href="/privacy">Политика конфиденциальности</a>
-                <a href="/terms">Условия использования</a>
+            <div class="footer-bottom">
+                <div class="footer-copyright">
+                    © @DateTime.Now.Year ECHO COFFEE. Все права защищены.
+                </div>
+                <div class="footer-links">
+                    <a href="/privacy">Политика конфиденциальности</a>
+                    <a href="/terms">Условия использования</a>
+                </div>
             </div>
         </div>
     </footer>
-
-    @code {
-        private bool isBurgerMenuOpen = false;
-
-        private void ToggleBurgerMenu()
-        {
-            isBurgerMenuOpen = !isBurgerMenuOpen;
-        }
-
-        private void NavigateTo(string page)
-        {
-            if (isBurgerMenuOpen)
-            {
-                ToggleBurgerMenu();
-            }
-            Navigation.NavigateTo($"/{page.ToLower()}", forceLoad: true);
-        }
-    }
 </body>
 </html>
+
+@code {
+    private bool isBurgerMenuOpen = false;
+
+    private class Drink
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public decimal Price { get; set; }
+        public string ImageUrl { get; set; }
+        public int Calories { get; set; }
+        public decimal Protein { get; set; }
+        public decimal Fat { get; set; }
+        public decimal Carbs { get; set; }
+    }
+
+    private List<Drink> drinks = new()
+    {
+        new Drink {
+            Id = 1,
+            Name = "КЛУБНИЧНЫЙ РАФ",
+            Description = "Нежный раф с клубничным пюре и ванильным сиропом, украшенный свежей клубникой",
+            Price = 390,
+            ImageUrl = "/весенне-летние/клубнич раф.jpg",
+            Calories = 210,
+            Protein = 5.2m,
+            Fat = 8.1m,
+            Carbs = 28.5m
+        },
+        new Drink {
+            Id = 2,
+            Name = "КОКОСОВЫЙ АЙС КОФЕ",
+            Description = "Освежающий холодный кофе с кокосовым молоком и тропическими нотами",
+            Price = 350,
+            ImageUrl = "/весенне-летние/кокос айс кофе.jpg",
+            Calories = 180,
+            Protein = 3.8m,
+            Fat = 10.2m,
+            Carbs = 18.3m
+        },
+        new Drink {
+            Id = 3,
+            Name = "ЛАВАНДОВЫЙ ЛАТТЕ",
+            Description = "Ароматный латте с лавандовым сиропом и нежной молочной пеной",
+            Price = 370,
+            ImageUrl = "/весенне-летние/лаванда латте.jpg",
+            Calories = 195,
+            Protein = 6.0m,
+            Fat = 7.5m,
+            Carbs = 25.1m
+        },
+        new Drink {
+            Id = 4,
+            Name = "ЛИМОННЫЙ ТОНИК",
+            Description = "Бодрящий эспрессо с тоником и лимоном - идеальный летний напиток",
+            Price = 320,
+            ImageUrl = "/весенне-летние/лимон тоник.jpg",
+            Calories = 85,
+            Protein = 0.5m,
+            Fat = 0.1m,
+            Carbs = 20.3m
+        },
+        new Drink {
+            Id = 5,
+            Name = "МАЛИНОВЫЙ ФРАППУЧИНО",
+            Description = "Освежающий фраппучино с малиновым пюре и ванильным сиропом",
+            Price = 410,
+            ImageUrl = "/весенне-летние/малиновый фрап.jpg",
+            Calories = 280,
+            Protein = 4.5m,
+            Fat = 9.8m,
+            Carbs = 42.1m
+        },
+        new Drink {
+            Id = 6,
+            Name = "МАТЧА ЛАТТЕ",
+            Description = "Традиционный японский чай матча с молоком и легкой сладостью",
+            Price = 380,
+            ImageUrl = "/весенне-летние/матча латте.jpg",
+            Calories = 160,
+            Protein = 7.2m,
+            Fat = 5.5m,
+            Carbs = 20.8m
+        },
+        new Drink {
+            Id = 7,
+            Name = "ОГУРЕЧНО-МЯТНЫЙ ЛИМОНАД",
+            Description = "Освежающий лимонад с огурцом, мятой и лаймом - идеальный летний напиток",
+            Price = 290,
+            ImageUrl = "/весенне-летние/огурец лимонад мята.jpg",
+            Calories = 95,
+            Protein = 1.2m,
+            Fat = 0.2m,
+            Carbs = 23.5m
+        },
+        new Drink {
+            Id = 8,
+            Name = "ПЕРСИКОВЫЙ ЧАЙ",
+            Description = "Ароматный холодный чай с персиковым сиропом и кусочками свежего персика",
+            Price = 310,
+            ImageUrl = "/весенне-летние/персик чай.jpg",
+            Calories = 120,
+            Protein = 0.8m,
+            Fat = 0.1m,
+            Carbs = 29.8m
+        }
+    };
+
+    private void ToggleBurgerMenu()
+    {
+        isBurgerMenuOpen = !isBurgerMenuOpen;
+    }
+
+    private void NavigateTo(string page)
+    {
+        Navigation.NavigateTo($"/{page}");
+        isBurgerMenuOpen = false;
+    }
+}
