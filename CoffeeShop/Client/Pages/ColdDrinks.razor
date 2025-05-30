@@ -1,5 +1,4 @@
 ﻿@page "/cold-drinks"
-@inject HttpClient Http //добавила из нового
 @inject NavigationManager Navigation
 
 <!DOCTYPE html>
@@ -452,24 +451,36 @@
             </div>
 
             <div class="drinks-grid">
-                @foreach (var item in menuItems)
+                @foreach (var drink in coldDrinks)
                 {
                     <div class="drink-card">
                         <div class="drink-image-container">
-                            <img src="@item.ImageUrl" alt="@item.Name" class="drink-image">
+                            <img src="@drink.ImageUrl" alt="@drink.Name" class="drink-image">
                         </div>
                         <div class="drink-info">
-                            <h3 class="drink-name">@item.Name</h3>
-                            <p class="drink-description">@item.Description</p>
+                            <h3 class="drink-name">@drink.Name</h3>
+                            <p class="drink-description">@drink.Description</p>
 
                             <div class="nutrition-info">
                                 <div class="nutrition-row">
                                     <span class="nutrition-title">Ккал:</span>
-                                    <span class="nutrition-value">@item.Calories</span>
+                                    <span class="nutrition-value">@drink.Calories</span>
+                                </div>
+                                <div class="nutrition-row">
+                                    <span class="nutrition-title">Белки, г:</span>
+                                    <span class="nutrition-value">@drink.Protein.ToString("0.0")</span>
+                                </div>
+                                <div class="nutrition-row">
+                                    <span class="nutrition-title">Жиры, г:</span>
+                                    <span class="nutrition-value">@drink.Fat.ToString("0.0")</span>
+                                </div>
+                                <div class="nutrition-row">
+                                    <span class="nutrition-title">Углеводы, г:</span>
+                                    <span class="nutrition-value">@drink.Carbs.ToString("0.0")</span>
                                 </div>
                             </div>
 
-                            <p class="drink-price">@item.Price ₽</p>
+                            <p class="drink-price">@drink.Price ₽</p>
                         </div>
                     </div>
                 }
@@ -536,35 +547,110 @@
 @code {
     private bool isBurgerMenuOpen = false;
 
-    private List<MenuItemDto> menuItems;
-    private string errorMessage;
-    protected override async Task OnInitializedAsync()
-    {
-        try
-        {
-            string category = "Холодные напитки";
-            string encoded = System.Net.WebUtility.UrlEncode(category);
-
-            menuItems = await Http.GetFromJsonAsync<List<MenuItemDto>>(
-    $"http://localhost:5153/Menu/category/{category}");
-        }
-        catch (Exception ex)
-        {
-            errorMessage = ex.Message;
-        }
-    }
-
-    public class MenuItemDto
+    private class ColdDrink
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public decimal Price { get; set; }
-        public string Category { get; set; }
+        public string ImageUrl { get; set; }
         public int Calories { get; set; }
-
-        public string ImageUrl { get; init; } //добавила
+        public decimal Protein { get; set; }
+        public decimal Fat { get; set; }
+        public decimal Carbs { get; set; }
     }
+
+    private List<ColdDrink> coldDrinks = new()
+    {
+        new ColdDrink {
+            Id = 1,
+            Name = "АЙС ЛАТТЕ",
+            Description = "Освежающий кофейный напиток с молоком и льдом",
+            Price = 290,
+            ImageUrl = "/холодные/айс латте.jpg",
+            Calories = 120,
+            Protein = 6.2m,
+            Fat = 4.8m,
+            Carbs = 10.5m
+        },
+        new ColdDrink {
+            Id = 2,
+            Name = "АРБУЗ ЛИМОНАД",
+            Description = "Освежающий лимонад с мякотью арбуза и мятой",
+            Price = 270,
+            ImageUrl = "/холодные/арбуз лимонад.jpg",
+            Calories = 90,
+            Protein = 0.5m,
+            Fat = 0.1m,
+            Carbs = 22.3m
+        },
+        new ColdDrink {
+            Id = 3,
+            Name = "ВИШНЕВЫЙ КОФЕ",
+            Description = "Холодный кофе с вишневым сиропом и сливками",
+            Price = 310,
+            ImageUrl = "/холодные/вишневый кофе.jpg",
+            Calories = 180,
+            Protein = 3.2m,
+            Fat = 7.5m,
+            Carbs = 25.8m
+        },
+        new ColdDrink {
+            Id = 4,
+            Name = "КОКОСОВЫЙ ФРАППЕ",
+            Description = "Холодный кофе с кокосовым молоком и льдом",
+            Price = 330,
+            ImageUrl = "/холодные/кокосовый фраппе.jpg",
+            Calories = 210,
+            Protein = 2.8m,
+            Fat = 12.3m,
+            Carbs = 20.1m
+        },
+        new ColdDrink {
+            Id = 5,
+            Name = "МАНГО ЧАЙ",
+            Description = "Холодный чай с манговым пюре и кусочками фруктов",
+            Price = 280,
+            ImageUrl = "/холодные/манго чай.jpg",
+            Calories = 110,
+            Protein = 0.3m,
+            Fat = 0.2m,
+            Carbs = 27.5m
+        },
+        new ColdDrink {
+            Id = 6,
+            Name = "МОЛОЧНЫЙ КОКТЕЙЛЬ С ПЕЧЕНЬЕМ",
+            Description = "Нежный молочный коктейль с крошкой печенья",
+            Price = 300,
+            ImageUrl = "/холодные/молоч коктейль печенье.jpg",
+            Calories = 320,
+            Protein = 8.5m,
+            Fat = 12.8m,
+            Carbs = 40.2m
+        },
+        new ColdDrink {
+            Id = 7,
+            Name = "МОХИТО",
+            Description = "Классический безалкогольный мохито с лаймом и мятой",
+            Price = 260,
+            ImageUrl = "/холодные/мохито.jpg",
+            Calories = 80,
+            Protein = 0.1m,
+            Fat = 0m,
+            Carbs = 20.5m
+        },
+        new ColdDrink {
+            Id = 8,
+            Name = "НИТРО КОФЕ",
+            Description = "Холодный кофе, насыщенный азотом для бархатистой текстуры",
+            Price = 350,
+            ImageUrl = "/холодные/нитро кофе.jpg",
+            Calories = 5,
+            Protein = 0.3m,
+            Fat = 0.1m,
+            Carbs = 0.8m
+        }
+    };
 
     private void ToggleBurgerMenu()
     {

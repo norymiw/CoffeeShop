@@ -1,5 +1,4 @@
 ﻿@page "/classic-menu"
-@inject HttpClient Http //добавила из нового
 @inject NavigationManager Navigation
 
 <!DOCTYPE html>
@@ -447,24 +446,36 @@
             </div>
 
             <div class="drinks-grid">
-                @foreach (var item in menuItems)
+                @foreach (var drink in classicDrinks)
                 {
                     <div class="drink-card">
                         <div class="drink-image-container">
-                            <img src="@item.ImageUrl" alt="@item.Name" class="drink-image">
+                            <img src="@drink.ImageUrl" alt="@drink.Name" class="drink-image">
                         </div>
                         <div class="drink-info">
-                            <h3 class="drink-name">@item.Name</h3>
-                            <p class="drink-description">@item.Description</p>
+                            <h3 class="drink-name">@drink.Name</h3>
+                            <p class="drink-description">@drink.Description</p>
 
                             <div class="nutrition-info">
                                 <div class="nutrition-row">
                                     <span class="nutrition-title">Ккал:</span>
-                                    <span class="nutrition-value">@item.Calories</span>
+                                    <span class="nutrition-value">@drink.Calories</span>
+                                </div>
+                                <div class="nutrition-row">
+                                    <span class="nutrition-title">Белки, г:</span>
+                                    <span class="nutrition-value">@drink.Protein.ToString("0.0")</span>
+                                </div>
+                                <div class="nutrition-row">
+                                    <span class="nutrition-title">Жиры, г:</span>
+                                    <span class="nutrition-value">@drink.Fat.ToString("0.0")</span>
+                                </div>
+                                <div class="nutrition-row">
+                                    <span class="nutrition-title">Углеводы, г:</span>
+                                    <span class="nutrition-value">@drink.Carbs.ToString("0.0")</span>
                                 </div>
                             </div>
 
-                            <p class="drink-price">@item.Price ₽</p>
+                            <p class="drink-price">@drink.Price ₽</p>
                         </div>
                     </div>
                 }
@@ -531,35 +542,110 @@
 @code {
     private bool isBurgerMenuOpen = false;
 
-    private List<MenuItemDto> menuItems;
-    private string errorMessage;
-    protected override async Task OnInitializedAsync()
-    {
-        try
-        {
-            string category = "Классические напитки";
-            string encoded = System.Net.WebUtility.UrlEncode(category);
-
-            menuItems = await Http.GetFromJsonAsync<List<MenuItemDto>>(
-    $"http://localhost:5153/Menu/category/{category}");
-        }
-        catch (Exception ex)
-        {
-            errorMessage = ex.Message;
-        }
-    }
-
-    public class MenuItemDto
+    private class ClassicDrink
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public decimal Price { get; set; }
-        public string Category { get; set; }
+        public string ImageUrl { get; set; }
         public int Calories { get; set; }
-
-        public string ImageUrl { get; init; } //добавила
+        public decimal Protein { get; set; }
+        public decimal Fat { get; set; }
+        public decimal Carbs { get; set; }
     }
+
+    private List<ClassicDrink> classicDrinks = new()
+    {
+        new ClassicDrink {
+            Id = 1,
+            Name = "АМЕРИКАНО КЛАССИЧЕСКИЙ",
+            Description = "Эспрессо с добавлением горячей воды для более мягкого вкуса",
+            Price = 220,
+            ImageUrl = "/классика/американо классик.jpg",
+            Calories = 10,
+            Protein = 0.2m,
+            Fat = 0m,
+            Carbs = 1.5m
+        },
+        new ClassicDrink {
+            Id = 2,
+            Name = "ГОРЯЧИЙ ШОКОЛАД КЛАССИЧЕСКИЙ",
+            Description = "Насыщенный шоколадный напиток с молоком и взбитыми сливками",
+            Price = 300,
+            ImageUrl = "/классика/горяч шоколад классик.jpg",
+            Calories = 350,
+            Protein = 8.5m,
+            Fat = 15.2m,
+            Carbs = 42.3m
+        },
+        new ClassicDrink {
+            Id = 3,
+            Name = "КАПУЧИНО КЛАССИЧЕСКИЙ",
+            Description = "Идеальный баланс эспрессо, молока и воздушной молочной пены",
+            Price = 280,
+            ImageUrl = "/классика/капучино классик.jpg",
+            Calories = 120,
+            Protein = 6.5m,
+            Fat = 5.8m,
+            Carbs = 10.2m
+        },
+        new ClassicDrink {
+            Id = 4,
+            Name = "ЛАТТЕ КЛАССИЧЕСКИЙ",
+            Description = "Нежный кофейный напиток с большим количеством молока",
+            Price = 290,
+            ImageUrl = "/классика/латте классик.jpg",
+            Calories = 180,
+            Protein = 9.2m,
+            Fat = 8.5m,
+            Carbs = 15.3m
+        },
+        new ClassicDrink {
+            Id = 5,
+            Name = "РАФ КЛАССИЧЕСКИЙ",
+            Description = "Эспрессо со сливками и ванильным сиропом, взбитые вместе",
+            Price = 320,
+            ImageUrl = "/классика/раф классик.jpg",
+            Calories = 250,
+            Protein = 4.2m,
+            Fat = 15.8m,
+            Carbs = 22.5m
+        },
+        new ClassicDrink {
+            Id = 6,
+            Name = "ФЛЭТ УАЙТ КЛАССИЧЕСКИЙ",
+            Description = "Двойной эспрессо с молоком и тонким слоем микропены",
+            Price = 310,
+            ImageUrl = "/классика/флэт уайт классик.jpg",
+            Calories = 150,
+            Protein = 8.5m,
+            Fat = 7.2m,
+            Carbs = 12.8m
+        },
+        new ClassicDrink {
+            Id = 7,
+            Name = "ЧАЙ КЛАССИЧЕСКИЙ",
+            Description = "Черный чай высшего сорта, приготовленный с соблюдением всех традиций",
+            Price = 200,
+            ImageUrl = "/классика/чай классик.jpg",
+            Calories = 5,
+            Protein = 0m,
+            Fat = 0m,
+            Carbs = 1.2m
+        },
+        new ClassicDrink {
+            Id = 8,
+            Name = "ЭСПРЕССО КЛАССИЧЕСКИЙ",
+            Description = "Крепкий насыщенный кофе с плотной пенкой и богатым вкусом",
+            Price = 210,
+            ImageUrl = "/классика/эспрессо классик.jpg",
+            Calories = 5,
+            Protein = 0.1m,
+            Fat = 0.1m,
+            Carbs = 0.8m
+        }
+    };
 
     private void ToggleBurgerMenu()
     {

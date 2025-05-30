@@ -1,4 +1,4 @@
-﻿@page "/tea"
+﻿@page "/cart"
 @inject NavigationManager Navigation
 
 <!DOCTYPE html>
@@ -6,8 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="logotip.png" type="image/png">
-    <title>ECHO COFFEE - Авторские чаи</title>
+    <title>Корзина - ECHO COFFEE</title>
     <style>
         * {
             margin: 0;
@@ -88,6 +87,7 @@
                 font-weight: 400;
                 letter-spacing: 1px;
                 transition: color 0.3s;
+                cursor: pointer;
             }
 
                 .nav-menu li a:hover {
@@ -145,6 +145,7 @@
                 text-decoration: none;
                 font-size: 16px;
                 display: block;
+                cursor: pointer;
             }
 
         .auth-btn {
@@ -183,112 +184,196 @@
                 visibility: visible;
             }
 
-        /* Main Content */
-        .page-header {
-            text-align: center;
-            margin: 60px 0 40px;
+        /* Основное содержимое страницы корзины */
+        .cart-container {
+            max-width: 1000px;
+            margin: 50px auto;
+            padding: 0 20px;
         }
 
-        .page-title {
-            font-size: 36px;
+        .cart-title {
+            font-size: 32px;
             font-weight: 300;
-            letter-spacing: 3px;
-            margin-bottom: 15px;
-        }
-
-        .page-subtitle {
-            font-size: 18px;
-            color: #a38b6d;
             letter-spacing: 2px;
+            margin-bottom: 40px;
+            color: #3a3226;
+            text-align: center;
         }
 
-        /* Grid with teas */
-        .teas-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 30px;
-            margin: 50px 0;
-            align-items: stretch;
+        .cart-items {
+            margin-bottom: 40px;
         }
 
-        .tea-card {
-            background: white;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
-            transition: all 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-        }
-
-            .tea-card:hover {
-                transform: translateY(-5px);
-                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-            }
-
-        .tea-image-container {
-            width: 100%;
-            aspect-ratio: 1/1;
-            background: #f8f5f0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-
-        .tea-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .tea-info {
-            padding: 20px;
-            flex-grow: 1;
-        }
-
-        .tea-name {
-            font-size: 20px;
-            font-weight: 400;
-            margin-bottom: 10px;
-        }
-
-        .tea-description {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 15px;
-            line-height: 1.5;
-        }
-
-        .nutrition-info {
-            margin-top: 10px;
-            font-size: 13px;
-            color: #666;
-            border-top: 1px solid #eee;
-            padding-top: 10px;
-        }
-
-        .nutrition-row {
+        .cart-item {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 3px;
+            align-items: center;
+            padding: 25px;
+            background: white;
+            margin-bottom: 20px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
         }
 
-        .nutrition-title {
+        .item-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .item-image {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        .item-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .item-name {
+            font-size: 18px;
+            font-weight: 400;
+            margin-bottom: 5px;
+        }
+
+        .item-description {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .item-price {
+            font-size: 16px;
             font-weight: 500;
-        }
-
-        .nutrition-value {
             color: #3a3226;
         }
 
-        .tea-price {
-            font-size: 18px;
-            color: #a38b6d;
-            font-weight: 500;
-            margin-top: 15px;
+        .item-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
+
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            border: 1px solid #d9d2c5;
+            border-radius: 4px;
+        }
+
+        .quantity-btn {
+            width: 30px;
+            height: 30px;
+            background: #f8f5f0;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .quantity-input {
+            width: 40px;
+            height: 30px;
+            text-align: center;
+            border: none;
+            border-left: 1px solid #d9d2c5;
+            border-right: 1px solid #d9d2c5;
+        }
+
+        .remove-btn {
+            background: none;
+            border: none;
+            color: #a38b6d;
+            cursor: pointer;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+            .remove-btn:hover {
+                color: #8a6d3b;
+            }
+
+        .cart-summary {
+            background: white;
+            padding: 30px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+            .summary-row:last-child {
+                border-bottom: none;
+                margin-bottom: 0;
+                padding-bottom: 0;
+            }
+
+        .summary-label {
+            font-size: 16px;
+            color: #666;
+        }
+
+        .summary-value {
+            font-size: 16px;
+            font-weight: 500;
+            color: #3a3226;
+        }
+
+        .total-row {
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            padding: 15px;
+            margin-top: 30px;
+            background: #3a3226;
+            color: white;
+            border: none;
+            font-size: 16px;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+            .checkout-btn:hover {
+                background: #a38b6d;
+            }
+
+        .empty-cart {
+            text-align: center;
+            padding: 50px 0;
+        }
+
+            .empty-cart p {
+                font-size: 18px;
+                margin-bottom: 30px;
+            }
+
+        .continue-btn {
+            padding: 12px 25px;
+            background: #3a3226;
+            color: white;
+            border: none;
+            font-size: 14px;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+            .continue-btn:hover {
+                background: #a38b6d;
+            }
 
         /* Footer */
         .site-footer {
@@ -297,7 +382,6 @@
             padding: 50px 0 20px;
             border-top: 1px solid #d9d2c5;
             font-size: 14px;
-            width: 100%;
         }
 
         .footer-content {
@@ -367,10 +451,6 @@
 
         /* Responsive */
         @@media (max-width: 768px) {
-            .teas-grid {
-                grid-template-columns: 1fr;
-            }
-
             header {
                 flex-direction: column;
                 gap: 20px;
@@ -379,10 +459,23 @@
             nav {
                 position: static;
                 transform: none;
+                margin: 20px 0;
             }
 
             .nav-menu {
-                gap: 20px;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .cart-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .item-controls {
+                width: 100%;
+                justify-content: space-between;
             }
 
             .footer-grid {
@@ -415,13 +508,13 @@
             <!-- Центральное меню -->
             <nav>
                 <ul class="nav-menu">
-                    <li><a href="/">ГЛАВНАЯ</a></li>
-                    <li><a href="/menu">МЕНЮ</a></li>
-                    <li><a href="/contacts">КОНТАКТЫ</a></li>
+                    <li><a @onclick='() => NavigateTo("company")' @onclick:preventDefault>КОМПАНИЯ</a></li>
+                    <li><a @onclick='() => NavigateTo("menu")' @onclick:preventDefault>МЕНЮ</a></li>
+                    <li><a @onclick='() => NavigateTo("contacts")' @onclick:preventDefault>КОНТАКТЫ</a></li>
                 </ul>
             </nav>
 
-            <!-- Кнопка бургера -->
+            <!-- Кнопка бургер-меню -->
             <button class="burger-btn" @onclick="ToggleBurgerMenu">
                 <span class="burger-line"></span>
                 <span class="burger-line"></span>
@@ -432,61 +525,74 @@
         <!-- Бургер-меню -->
         <div class="burger-menu @(isBurgerMenuOpen ? "show" : "")">
             <div class="burger-menu-item">
-                <a href="#" @onclick='() => NavigateTo("profile")'>Профиль</a>
+                <a @onclick='() => { ToggleBurgerMenu(); NavigateTo("profile"); }' @onclick:preventDefault>Профиль</a>
             </div>
             <div class="burger-menu-item">
-                <a href="#" @onclick='() => NavigateTo("settings")'>Настройки</a>
+                <a @onclick='() => { ToggleBurgerMenu(); NavigateTo("settings"); }' @onclick:preventDefault>Настройки</a>
             </div>
-            <button class="auth-btn" @onclick='() => NavigateTo("login")'>АВТОРИЗАЦИЯ</button>
+            <button class="auth-btn" @onclick='() => { ToggleBurgerMenu(); NavigateTo("login"); }'>АВТОРИЗАЦИЯ</button>
         </div>
 
         <!-- Затемнение фона -->
         <div class="overlay @(isBurgerMenuOpen ? "show" : "")" @onclick="ToggleBurgerMenu"></div>
+    </div>
 
-        <!-- Page Content -->
-        <main>
-            <div class="page-header">
-                <h1 class="page-title">АВТОРСКИЕ ЧАИ</h1>
-                <p class="page-subtitle">УНИКАЛЬНЫЕ ЧАЙНЫЕ КОМПОЗИЦИИ, СОЗДАННЫЕ С ЛЮБОВЬЮ И ВНИМАНИЕМ К ДЕТАЛЯМ</p>
-            </div>
+    <!-- Основное содержимое страницы корзины -->
+    <main>
+        <div class="cart-container">
+            <h1 class="cart-title">ВАША КОРЗИНА</h1>
 
-            <div class="teas-grid">
-                @foreach (var tea in teas)
-                {
-                    <div class="tea-card">
-                        <div class="tea-image-container">
-                            <img src="@tea.ImageUrl" alt="@tea.Name" class="tea-image">
-                        </div>
-                        <div class="tea-info">
-                            <h3 class="tea-name">@tea.Name</h3>
-                            <p class="tea-description">@tea.Description</p>
-
-                            <div class="nutrition-info">
-                                <div class="nutrition-row">
-                                    <span class="nutrition-title">Ккал:</span>
-                                    <span class="nutrition-value">@tea.Calories</span>
-                                </div>
-                                <div class="nutrition-row">
-                                    <span class="nutrition-title">Белки, г:</span>
-                                    <span class="nutrition-value">@tea.Protein.ToString("0.0")</span>
-                                </div>
-                                <div class="nutrition-row">
-                                    <span class="nutrition-title">Жиры, г:</span>
-                                    <span class="nutrition-value">@tea.Fat.ToString("0.0")</span>
-                                </div>
-                                <div class="nutrition-row">
-                                    <span class="nutrition-title">Углеводы, г:</span>
-                                    <span class="nutrition-value">@tea.Carbs.ToString("0.0")</span>
+            @if (cartItems.Count == 0)
+            {
+                <div class="empty-cart">
+                    <p>Ваша корзина пуста</p>
+                    <button class="continue-btn" @onclick='() => NavigateTo("menu")'>ПЕРЕЙТИ В МЕНЮ</button>
+                </div>
+            }
+            else
+            {
+                <div class="cart-items">
+                    @foreach (var item in cartItems)
+                    {
+                        <div class="cart-item">
+                            <div class="item-info">
+                                <img src="@item.ImageUrl" alt="@item.Name" class="item-image">
+                                <div class="item-details">
+                                    <h3 class="item-name">@item.Name</h3>
+                                    <p class="item-description">@item.Description</p>
+                                    <span class="item-price">@item.Price.ToString("C")</span>
                                 </div>
                             </div>
-
-                            <p class="tea-price">@tea.Price ₽</p>
+                            <div class="item-controls">
+                                <div class="quantity-control">
+                                    <button class="quantity-btn" @onclick='() => DecreaseQuantity(item)'>-</button>
+                                    <input type="text" class="quantity-input" value="@item.Quantity" readonly>
+                                    <button class="quantity-btn" @onclick='() => IncreaseQuantity(item)'>+</button>
+                                </div>
+                                <button class="remove-btn" @onclick='() => RemoveItem(item)'>Удалить</button>
+                            </div>
                         </div>
+                    }
+                </div>
+
+                <div class="cart-summary">
+                    <div class="summary-row">
+                        <span class="summary-label">Товары (@cartItems.Sum(i => i.Quantity))</span>
+                        <span class="summary-value">@cartItems.Sum(i => i.Price * i.Quantity).ToString("C")</span>
                     </div>
-                }
-            </div>
-        </main>
-    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">Доставка</span>
+                        <span class="summary-value">@(deliveryCost == 0 ? "Бесплатно" : deliveryCost.ToString("C"))</span>
+                    </div>
+                    <div class="summary-row total-row">
+                        <span class="summary-label">Итого</span>
+                        <span class="summary-value">@((cartItems.Sum(i => i.Price * i.Quantity) + deliveryCost).ToString("C"))</span>
+                    </div>
+                    <button class="checkout-btn" @onclick="ProceedToCheckout">ОФОРМИТЬ ЗАКАЗ</button>
+                </div>
+            }
+        </div>
+    </main>
 
     <!-- Footer -->
     <footer class="site-footer">
@@ -529,93 +635,98 @@
                     </p>
                 </div>
             </div>
+        </div>
 
-            <div class="footer-bottom">
-                <div class="footer-copyright">
-                    © @DateTime.Now.Year ECHO COFFEE. Все права защищены.
-                </div>
-                <div class="footer-links">
-                    <a href="/privacy">Политика конфиденциальности</a>
-                    <a href="/terms">Условия использования</a>
-                </div>
+        <div class="footer-bottom">
+            <div class="footer-copyright">
+                © @DateTime.Now.Year ECHO COFFEE. Все права защищены.
+            </div>
+            <div class="footer-links">
+                <a href="/privacy">Политика конфиденциальности</a>
+                <a href="/terms">Условия использования</a>
             </div>
         </div>
     </footer>
+
+    @code {
+        private bool isBurgerMenuOpen = false;
+        private List<CartItem> cartItems = new List<CartItem>();
+        private decimal deliveryCost = 0; // Бесплатная доставка
+
+        protected override void OnInitialized()
+        {
+            // Заглушка для тестирования - в реальном приложении данные будут браться из состояния
+            cartItems.Add(new CartItem
+            {
+                Id = 1,
+                Name = "Капучино классический",
+                Description = "Двойная порция эспрессо, молоко с нежной пенкой",
+                Price = 250,
+                Quantity = 1,
+                ImageUrl = "capuchino.png"
+            });
+
+            cartItems.Add(new CartItem
+            {
+                Id = 2,
+                Name = "Латте с сиропом ванили",
+                Description = "Нежный латте с натуральным ванильным сиропом",
+                Price = 280,
+                Quantity = 2,
+                ImageUrl = "latte.png"
+            });
+        }
+
+        private void ToggleBurgerMenu()
+        {
+            isBurgerMenuOpen = !isBurgerMenuOpen;
+        }
+
+        private void NavigateTo(string page)
+        {
+            if (isBurgerMenuOpen)
+            {
+                ToggleBurgerMenu();
+            }
+            Navigation.NavigateTo($"/{page.ToLower()}", forceLoad: true);
+        }
+
+        private void IncreaseQuantity(CartItem item)
+        {
+            item.Quantity++;
+        }
+
+        private void DecreaseQuantity(CartItem item)
+        {
+            if (item.Quantity > 1)
+            {
+                item.Quantity--;
+            }
+            else
+            {
+                RemoveItem(item);
+            }
+        }
+
+        private void RemoveItem(CartItem item)
+        {
+            cartItems.Remove(item);
+        }
+
+        private void ProceedToCheckout()
+        {
+            Navigation.NavigateTo("/checkout");
+        }
+
+        private class CartItem
+        {
+            public int Id { get; set; }
+            public string Name { get; set; }
+            public string Description { get; set; }
+            public decimal Price { get; set; }
+            public int Quantity { get; set; }
+            public string ImageUrl { get; set; }
+        }
+    }
 </body>
 </html>
-
-@code {
-    private bool isBurgerMenuOpen = false;
-
-    private class Tea
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public decimal Price { get; set; }
-        public string ImageUrl { get; set; }
-        public int Calories { get; set; }
-        public decimal Protein { get; set; }
-        public decimal Fat { get; set; }
-        public decimal Carbs { get; set; }
-    }
-
-    private List<Tea> teas = new()
-    {
-        new Tea {
-            Id = 1,
-            Name = "ИМБИРНЫЙ ЧАЙ С МЕДОМ",
-            Description = "Ароматный черный чай с имбирем, медом и лимоном - идеальный напиток для холодных дней",
-            Price = 320,
-            ImageUrl = "/авторские чаи/имбирный чай с медом.jpg",
-            Calories = 50,
-            Protein = 0.5m,
-            Fat = 0.1m,
-            Carbs = 12.3m
-        },
-        new Tea {
-            Id = 2,
-            Name = "МЯТНЫЙ УЛУН ЛАЙМ",
-            Description = "Освежающий улун с мятой и лаймом, с легкими цветочными нотами",
-            Price = 380,
-            ImageUrl = "/авторские чаи/мята улун лайм.jpg",
-            Calories = 5,
-            Protein = 0.2m,
-            Fat = 0m,
-            Carbs = 1.2m
-        },
-        new Tea {
-            Id = 3,
-            Name = "ЦИТРУСОВЫЙ РОЙБУШ",
-            Description = "Насыщенный ройбуш с апельсином, лимоном и специями, без кофеина",
-            Price = 290,
-            ImageUrl = "/авторские чаи/цитрус ройбуш.jpg",
-            Calories = 15,
-            Protein = 0.3m,
-            Fat = 0m,
-            Carbs = 3.5m
-        },
-        new Tea {
-            Id = 4,
-            Name = "ЯГОДНЫЙ ЧАЙ ГИБИСКУС",
-            Description = "Яркий кисло-сладкий напиток из гибискуса с малиной и смородиной",
-            Price = 270,
-            ImageUrl = "/авторские чаи/ягоды чай гибискус.jpg",
-            Calories = 25,
-            Protein = 0.4m,
-            Fat = 0.1m,
-            Carbs = 6.2m
-        }
-    };
-
-    private void ToggleBurgerMenu()
-    {
-        isBurgerMenuOpen = !isBurgerMenuOpen;
-    }
-
-    private void NavigateTo(string page)
-    {
-        Navigation.NavigateTo($"/{page}");
-        isBurgerMenuOpen = false;
-    }
-}

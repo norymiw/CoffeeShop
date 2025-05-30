@@ -1,5 +1,4 @@
 ﻿@page "/signature-menu"
-@inject HttpClient Http //добавила из нового
 @inject NavigationManager Navigation
 
 <!DOCTYPE html>
@@ -452,24 +451,36 @@
             </div>
 
             <div class="drinks-grid">
-                @foreach (var item in menuItems)
+                @foreach (var drink in signatureDrinks)
                 {
                     <div class="drink-card">
                         <div class="drink-image-container">
-                            <img src="@item.ImageUrl" alt="@item.Name" class="drink-image">
+                            <img src="@drink.ImageUrl" alt="@drink.Name" class="drink-image">
                         </div>
                         <div class="drink-info">
-                            <h3 class="drink-name">@item.Name</h3>
-                            <p class="drink-description">@item.Description</p>
+                            <h3 class="drink-name">@drink.Name</h3>
+                            <p class="drink-description">@drink.Description</p>
 
                             <div class="nutrition-info">
                                 <div class="nutrition-row">
                                     <span class="nutrition-title">Ккал:</span>
-                                    <span class="nutrition-value">@item.Calories</span>
+                                    <span class="nutrition-value">@drink.Calories</span>
+                                </div>
+                                <div class="nutrition-row">
+                                    <span class="nutrition-title">Белки, г:</span>
+                                    <span class="nutrition-value">@drink.Protein.ToString("0.0")</span>
+                                </div>
+                                <div class="nutrition-row">
+                                    <span class="nutrition-title">Жиры, г:</span>
+                                    <span class="nutrition-value">@drink.Fat.ToString("0.0")</span>
+                                </div>
+                                <div class="nutrition-row">
+                                    <span class="nutrition-title">Углеводы, г:</span>
+                                    <span class="nutrition-value">@drink.Carbs.ToString("0.0")</span>
                                 </div>
                             </div>
 
-                            <p class="drink-price">@item.Price ₽</p>
+                            <p class="drink-price">@drink.Price ₽</p>
                         </div>
                     </div>
                 }
@@ -536,35 +547,110 @@
 @code {
     private bool isBurgerMenuOpen = false;
 
-    private List<MenuItemDto> menuItems;
-    private string errorMessage;
-    protected override async Task OnInitializedAsync()
-    {
-        try
-        {
-            string category = "Фирменное меню";
-            string encoded = System.Net.WebUtility.UrlEncode(category);
-
-            menuItems = await Http.GetFromJsonAsync<List<MenuItemDto>>(
-    $"http://localhost:5153/Menu/category/{category}");
-        }
-        catch (Exception ex)
-        {
-            errorMessage = ex.Message;
-        }
-    }
-
-    public class MenuItemDto
+    private class Drink
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public decimal Price { get; set; }
-        public string Category { get; set; }
+        public string ImageUrl { get; set; }
         public int Calories { get; set; }
-
-        public string ImageUrl { get; init; } //добавила
+        public decimal Protein { get; set; }
+        public decimal Fat { get; set; }
+        public decimal Carbs { get; set; }
     }
+
+    private List<Drink> signatureDrinks = new()
+    {
+        new Drink {
+            Id = 1,
+            Name = "ЯГОДНЫЙ ЛИМОНАД С МАТЧЕЙ",
+            Description = "Освежающий лимонад с ягодным миксом и порошком матча, создающий идеальный баланс кислого и сладкого",
+            Price = 420,
+            ImageUrl = "/фирменное меню/Berry Matcha Lemonade.jpg",
+            Calories = 180,
+            Protein = 2.5m,
+            Fat = 0.3m,
+            Carbs = 42.1m
+        },
+        new Drink {
+            Id = 2,
+            Name = "МОККО ИЗ ШВАРЦВАЛЬДА",
+            Description = "Насыщенный мокко с вишневым сиропом, черным шоколадом и сливочным кремом, вдохновленный знаменитым немецким тортом",
+            Price = 450,
+            ImageUrl = "/фирменное меню/Black Forest Mocha.jpg",
+            Calories = 320,
+            Protein = 6.8m,
+            Fat = 15.2m,
+            Carbs = 38.5m
+        },
+        new Drink {
+            Id = 3,
+            Name = "ЭХО КАРАМЕЛЬНОГО ОБЛАКА",
+            Description = "Воздушный латте с карамельным сиропом и ванильной пеной, украшенный карамельной нитью",
+            Price = 390,
+            ImageUrl = "/фирменное меню/Echo Caramel Cloud.jpg",
+            Calories = 280,
+            Protein = 7.5m,
+            Fat = 10.8m,
+            Carbs = 35.2m
+        },
+        new Drink {
+            Id = 4,
+            Name = "ЛАТТЕ С МЕДОМ И КОРИЦЕЙ",
+            Description = "Традиционный латте с натуральным медом, корицей и щепоткой мускатного ореха",
+            Price = 370,
+            ImageUrl = "/фирменное меню/Honey Cinnamon Latte.jpg",
+            Calories = 240,
+            Protein = 8.1m,
+            Fat = 9.5m,
+            Carbs = 30.8m
+        },
+        new Drink {
+            Id = 5,
+            Name = "АПЕЛЬСИНОВЫЙ ТОНИК ДЛЯ ЭСПРЕССО",
+            Description = "Энергичный эспрессо с тоником и апельсиновым сиропом, подчеркивающий яркость кофейного вкуса",
+            Price = 350,
+            ImageUrl = "/фирменное меню/Orange Espresso Tonic.jpg",
+            Calories = 120,
+            Protein = 0.8m,
+            Fat = 0.2m,
+            Carbs = 28.5m
+        },
+        new Drink {
+            Id = 6,
+            Name = "ЛАТТЕ С ФИСТАШКОВЫМ КРЕМОМ",
+            Description = "Нежный латте с фисташковым сиропом и воздушным фисташковым кремом, украшенный дроблеными фисташками",
+            Price = 430,
+            ImageUrl = "/фирменное меню/Pistachio Cream Latte.jpg",
+            Calories = 310,
+            Protein = 9.2m,
+            Fat = 14.5m,
+            Carbs = 35.8m
+        },
+        new Drink {
+            Id = 7,
+            Name = "ХОЛОДНЫЙ НАПИТОК ИЗ СОЛЕНЫХ ИРИСОК",
+            Description = "Освежающий молочный напиток со вкусом соленой карамели и ванильными нотками",
+            Price = 380,
+            ImageUrl = "/фирменное меню/Pistachio Cream Latte.jpg",
+            Calories = 290,
+            Protein = 6.5m,
+            Fat = 12.8m,
+            Carbs = 36.2m
+        },
+        new Drink {
+            Id = 8,
+            Name = "ЛАТТЕ С ДЫМЧАТЫМ КЛЕНОМ",
+            Description = "Уникальный латте с кленовым сиропом и дымчатым ароматом, напоминающий осенний лес",
+            Price = 410,
+            ImageUrl = "/фирменное меню/Smoky Maple Latte.jpg",
+            Calories = 270,
+            Protein = 7.8m,
+            Fat = 11.2m,
+            Carbs = 32.5m
+        }
+    };
 
     private void ToggleBurgerMenu()
     {

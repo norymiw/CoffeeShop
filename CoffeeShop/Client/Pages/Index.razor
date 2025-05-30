@@ -7,6 +7,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ECHO COFFEE</title>
+    <!-- Добавляем Font Awesome для иконки корзины -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -101,6 +103,41 @@
                 .nav-menu li a:hover {
                     color: #a38b6d;
                 }
+
+        /* Кнопки в шапке */
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        /* Иконка корзины */
+        .cart-icon {
+            position: relative;
+            font-size: 20px;
+            color: #3a3226;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+            .cart-icon:hover {
+                color: #a38b6d;
+            }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #a38b6d;
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 11px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
         /* Кнопка бургер-меню */
         .burger-btn {
@@ -452,12 +489,21 @@
                 </ul>
             </nav>
 
-            <!-- Кнопка бургер-меню -->
-            <button class="burger-btn" @onclick="ToggleBurgerMenu">
-                <span class="burger-line"></span>
-                <span class="burger-line"></span>
-                <span class="burger-line"></span>
-            </button>
+            <!-- Кнопки в шапке -->
+            <div class="header-actions">
+                <!-- Иконка корзины -->
+                <div class="cart-icon" @onclick='() => NavigateTo("cart")'>
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">0</span>
+                </div>
+
+                <!-- Кнопка бургер-меню -->
+                <button class="burger-btn" @onclick="ToggleBurgerMenu">
+                    <span class="burger-line"></span>
+                    <span class="burger-line"></span>
+                    <span class="burger-line"></span>
+                </button>
+            </div>
         </header>
 
         <!-- Бургер-меню -->
@@ -508,19 +554,13 @@
                 <div class="menu-item" @onclick='() => NavigateTo("classic-menu")'>
                     <h3>КЛАССИЧЕСКОЕ МЕНЮ</h3>
                 </div>
-                <div class="menu-item" @onclick='() => NavigateTo("cold-drinks")'> @* перенесла сюда *@
-                    <h3>ХОЛОДНЫЕ НАПИТКИ</h3>
-                </div>
-                <div class="menu-item" @onclick='() => NavigateTo("desserts")'>
-                    <h3>ДЕСЕРТЫ</h3>
-                </div>
 
-                @* <!-- Широкая центрированная карточка --> УБРАЛА И ПЕРЕНЕСЛА
+                <!-- Широкая центрированная карточка -->
                 <div class="full-row">
                     <div class="menu-item wide-item" @onclick='() => NavigateTo("cold-drinks")'>
                         <h3>ХОЛОДНЫЕ НАПИТКИ</h3>
                     </div>
-                </div> *@
+                </div>
             </div>
 
             <div class="contacts">

@@ -1,5 +1,4 @@
 ﻿@page "/menu"
-@inject HttpClient Http //добавила из нового
 @inject NavigationManager Navigation
 
 <!DOCTYPE html>
@@ -233,6 +232,11 @@
             justify-content: space-between;
             padding: 10px 0;
             border-bottom: 1px dashed #d9d2c5;
+            align-items: center;
+        }
+
+        .item-info {
+            flex-grow: 1;
         }
 
         .item-name {
@@ -245,12 +249,28 @@
         }
 
         .item-description {
-            grid-column: 1 / -1;
             font-size: 14px;
             color: #666;
             margin-top: 5px;
             line-height: 1.5;
         }
+
+        .add-to-cart-btn {
+            background-color: #a38b6d;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 14px;
+            margin-left: 15px;
+            white-space: nowrap;
+        }
+
+            .add-to-cart-btn:hover {
+                background-color: #8a755e;
+            }
 
         /* Footer */
         .site-footer {
@@ -405,7 +425,7 @@
         <main>
             <div class="page-header">
                 <h1 class="page-title">ПОЛНОЕ МЕНЮ</h1>
-                <p class="page-subtitle">ВСЕ НАШИ НАПИТКИ И ДЕСЕРТЫ В ОДНОМ МЕСТЕ</p>
+                <p class="page-subtitle">ВСЕ НАШИ НАПИТКИ В ОДНОМ МЕСТЕ</p>
             </div>
 
             <div class="menu-container">
@@ -413,13 +433,48 @@
                 <div class="menu-section">
                     <h2 class="section-title">КОФЕ</h2>
                     <div class="menu-items">
-                        @foreach (var item in menuItemsClMenu) //если не будет работать с айтемом, то подставьте цифры к переменной
-                        {
-                            <div class="menu-item">
-                                <span class="item-name">@item.Name</span>
-                                <span class="item-price">@item.Price ₽</span>
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <span class="item-name">Эспрессо</span>
+                                <span class="item-price">250 ₽</span>
                             </div>
-                        }
+                            <button class="add-to-cart-btn" @onclick='() => AddToCart("Эспрессо", 250)'>Добавить</button>
+                        </div>
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <span class="item-name">Американо</span>
+                                <span class="item-price">280 ₽</span>
+                            </div>
+                            <button class="add-to-cart-btn" @onclick='() => AddToCart("Американо", 280)'>Добавить</button>
+                        </div>
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <span class="item-name">Капучино</span>
+                                <span class="item-price">320 ₽</span>
+                            </div>
+                            <button class="add-to-cart-btn" @onclick='() => AddToCart("Капучино", 320)'>Добавить</button>
+                        </div>
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <span class="item-name">Латте</span>
+                                <span class="item-price">340 ₽</span>
+                            </div>
+                            <button class="add-to-cart-btn" @onclick='() => AddToCart("Латте", 340)'>Добавить</button>
+                        </div>
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <span class="item-name">Флэт Уайт</span>
+                                <span class="item-price">350 ₽</span>
+                            </div>
+                            <button class="add-to-cart-btn" @onclick='() => AddToCart("Флэт Уайт", 350)'>Добавить</button>
+                        </div>
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <span class="item-name">Раф</span>
+                                <span class="item-price">370 ₽</span>
+                            </div>
+                            <button class="add-to-cart-btn" @onclick='() => AddToCart("Раф", 370)'>Добавить</button>
+                        </div>
                     </div>
                 </div>
 
@@ -427,13 +482,41 @@
                 <div class="menu-section">
                     <h2 class="section-title">АВТОРСКИЕ ЧАИ</h2>
                     <div class="menu-items">
-                        @foreach (var item in menuItemsTea)
-                        {
-                            <div class="menu-item">
-                                <span class="item-name">@item.Name</span>
-                                <span class="item-price">@item.Price ₽</span>
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <span class="item-name">Имбирный чай с медом</span>
+                                <span class="item-price">320 ₽</span>
+                                <div class="item-description">Ароматный черный чай с имбирем, медом и лимоном</div>
                             </div>
-                        }
+                            <button class="add-to-cart-btn" @onclick='() => AddToCart("Имбирный чай с медом", 320)'>Добавить</button>
+                        </div>
+
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <span class="item-name">Мятный улун лайм</span>
+                                <span class="item-price">380 ₽</span>
+                                <div class="item-description">Освежающий улун с мятой и лаймом, с легкими цветочными нотами</div>
+                            </div>
+                            <button class="add-to-cart-btn" @onclick='() => AddToCart("Мятный улун лайм", 380)'>Добавить</button>
+                        </div>
+
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <span class="item-name">Цитрусовый ройбуш</span>
+                                <span class="item-price">290 ₽</span>
+                                <div class="item-description">Насыщенный ройбуш с апельсином, лимоном и специями</div>
+                            </div>
+                            <button class="add-to-cart-btn" @onclick='() => AddToCart("Цитрусовый ройбуш", 290)'>Добавить</button>
+                        </div>
+
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <span class="item-name">Ягодный чай гибискус</span>
+                                <span class="item-price">270 ₽</span>
+                                <div class="item-description">Яркий кисло-сладкий напиток из гибискуса с малиной и смородиной</div>
+                            </div>
+                            <button class="add-to-cart-btn" @onclick='() => AddToCart("Ягодный чай гибискус", 270)'>Добавить</button>
+                        </div>
                     </div>
                 </div>
 
@@ -441,13 +524,77 @@
                 <div class="menu-section">
                     <h2 class="section-title">ВЕСНА-ЛЕТО</h2>
                     <div class="menu-items">
-                        @foreach (var item in menuItemsSprSum)
-                        {
-                            <div class="menu-item">
-                                <span class="item-name">@item.Name</span>
-                                <span class="item-price">@item.Price ₽</span>
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <span class="item-name">Клубничный раф</span>
+                                <span class="item-price">390 ₽</span>
+                                <div class="item-description">Нежный раф с клубничным пюре и ванильным сиропом</div>
                             </div>
-                        }
+                            <button class="add-to-cart-btn" @onclick='() => AddToCart("Клубничный раф", 390)'>Добавить</button>
+                        </div>
+
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <span class="item-name">Кокосовый айс кофе</span>
+                                <span class="item-price">350 ₽</span>
+                                <div class="item-description">Освежающий холодный кофе с кокосовым молоком</div>
+                            </div>
+                            <button class="add-to-cart-btn" @onclick='() => AddToCart("Кокосовый айс кофе", 350)'>Добавить</button>
+                        </div>
+
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <span class="item-name">Лавандовый латте</span>
+                                <span class="item-price">370 ₽</span>
+                                <div class="item-description">Ароматный латте с лавандовым сиропом</div>
+                            </div>
+                            <button class="add-to-cart-btn" @onclick='() => AddToCart("Лавандовый латте", 370)'>Добавить</button>
+                        </div>
+
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <span class="item-name">Лимонный тоник</span>
+                                <span class="item-price">320 ₽</span>
+                                <div class="item-description">Бодрящий эспрессо с тоником и лимоном</div>
+                            </div>
+                            <button class="add-to-cart-btn" @onclick='() => AddToCart("Лимонный тоник", 320)'>Добавить</button>
+                        </div>
+
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <span class="item-name">Малиновый фраппучино</span>
+                                <span class="item-price">410 ₽</span>
+                                <div class="item-description">Освежающий фраппучино с малиновым пюре</div>
+                            </div>
+                            <button class="add-to-cart-btn" @onclick='() => AddToCart("Малиновый фраппучино", 410)'>Добавить</button>
+                        </div>
+
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <span class="item-name">Матча латте</span>
+                                <span class="item-price">380 ₽</span>
+                                <div class="item-description">Традиционный японский чай матча с молоком</div>
+                            </div>
+                            <button class="add-to-cart-btn" @onclick='() => AddToCart("Матча латте", 380)'>Добавить</button>
+                        </div>
+
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <span class="item-name">Огуречно-мятный лимонад</span>
+                                <span class="item-price">290 ₽</span>
+                                <div class="item-description">Освежающий лимонад с огурцом, мятой и лаймом</div>
+                            </div>
+                            <button class="add-to-cart-btn" @onclick='() => AddToCart("Огуречно-мятный лимонад", 290)'>Добавить</button>
+                        </div>
+
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <span class="item-name">Персиковый чай</span>
+                                <span class="item-price">310 ₽</span>
+                                <div class="item-description">Ароматный холодный чай с персиковым сиропом</div>
+                            </div>
+                            <button class="add-to-cart-btn" @onclick='() => AddToCart("Персиковый чай", 310)'>Добавить</button>
+                        </div>
                     </div>
                 </div>
 
@@ -455,27 +602,77 @@
                 <div class="menu-section">
                     <h2 class="section-title">ФИРМЕННОЕ МЕНЮ</h2>
                     <div class="menu-items">
-                        @foreach (var item in menuItemsComMenu)
-                        {
-                            <div class="menu-item">
-                                <span class="item-name">@item.Name</span>
-                                <span class="item-price">@item.Price ₽</span>
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <span class="item-name">Ягодный лимонад с матчей</span>
+                                <span class="item-price">420 ₽</span>
+                                <div class="item-description">Освежающий лимонад с ягодным миксом и порошком матча</div>
                             </div>
-                        }
-                    </div>
-                </div>
+                            <button class="add-to-cart-btn" @onclick='() => AddToCart("Ягодный лимонад с матчей", 420)'>Добавить</button>
+                        </div>
 
-                <!-- Холодные напитки --> //добавила
-                <div class="menu-section">
-                    <h2 class="section-title">ХОЛОДНЫЕ НАПИТКИ</h2>
-                    <div class="menu-items">
-                        @foreach (var item in menuItemsCold)
-                        {
-                            <div class="menu-item">
-                                <span class="item-name">@item.Name</span>
-                                <span class="item-price">@item.Price ₽</span>
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <span class="item-name">Мокко из Шварцвальда</span>
+                                <span class="item-price">450 ₽</span>
+                                <div class="item-description">Насыщенный мокко с вишневым сиропом и черным шоколадом</div>
                             </div>
-                        }
+                            <button class="add-to-cart-btn" @onclick='() => AddToCart("Мокко из Шварцвальда", 450)'>Добавить</button>
+                        </div>
+
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <span class="item-name">Эхо карамельного облака</span>
+                                <span class="item-price">390 ₽</span>
+                                <div class="item-description">Воздушный латте с карамельным сиропом и ванильной пеной</div>
+                            </div>
+                            <button class="add-to-cart-btn" @onclick='() => AddToCart("Эхо карамельного облака", 390)'>Добавить</button>
+                        </div>
+
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <span class="item-name">Латте с медом и корицей</span>
+                                <span class="item-price">370 ₽</span>
+                                <div class="item-description">Традиционный латте с натуральным медом и корицей</div>
+                            </div>
+                            <button class="add-to-cart-btn" @onclick='() => AddToCart("Латте с медом и корицей", 370)'>Добавить</button>
+                        </div>
+
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <span class="item-name">Апельсиновый тоник для эспрессо</span>
+                                <span class="item-price">350 ₽</span>
+                                <div class="item-description">Энергичный эспрессо с тоником и апельсиновым сиропом</div>
+                            </div>
+                            <button class="add-to-cart-btn" @onclick='() => AddToCart("Апельсиновый тоник для эспрессо", 350)'>Добавить</button>
+                        </div>
+
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <span class="item-name">Латте с фисташковым кремом</span>
+                                <span class="item-price">430 ₽</span>
+                                <div class="item-description">Нежный латте с фисташковым сиропом и воздушным кремом</div>
+                            </div>
+                            <button class="add-to-cart-btn" @onclick='() => AddToCart("Латте с фисташковым кремом", 430)'>Добавить</button>
+                        </div>
+
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <span class="item-name">Холодный напиток из соленых ирисок</span>
+                                <span class="item-price">380 ₽</span>
+                                <div class="item-description">Молочный напиток со вкусом соленой карамели</div>
+                            </div>
+                            <button class="add-to-cart-btn" @onclick='() => AddToCart("Холодный напиток из соленых ирисок", 380)'>Добавить</button>
+                        </div>
+
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <span class="item-name">Латте с дымчатым кленом</span>
+                                <span class="item-price">410 ₽</span>
+                                <div class="item-description">Уникальный латте с кленовым сиропом и дымчатым ароматом</div>
+                            </div>
+                            <button class="add-to-cart-btn" @onclick='() => AddToCart("Латте с дымчатым кленом", 410)'>Добавить</button>
+                        </div>
                     </div>
                 </div>
 
@@ -483,13 +680,53 @@
                 <div class="menu-section">
                     <h2 class="section-title">ДЕСЕРТЫ</h2>
                     <div class="menu-items">
-                        @foreach (var item in menuItemsDes)
-                        {
-                            <div class="menu-item">
-                                <span class="item-name">@item.Name</span>
-                                <span class="item-price">@item.Price ₽</span>
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <span class="item-name">Круассан классический</span>
+                                <span class="item-price">220 ₽</span>
                             </div>
-                        }
+                            <button class="add-to-cart-btn" @onclick='() => AddToCart("Круассан классический", 220)'>Добавить</button>
+                        </div>
+
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <span class="item-name">Круассан с миндальным кремом</span>
+                                <span class="item-price">280 ₽</span>
+                            </div>
+                            <button class="add-to-cart-btn" @onclick='() => AddToCart("Круассан с миндальным кремом", 280)'>Добавить</button>
+                        </div>
+
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <span class="item-name">Чизкейк Нью-Йорк</span>
+                                <span class="item-price">350 ₽</span>
+                            </div>
+                            <button class="add-to-cart-btn" @onclick='() => AddToCart("Чизкейк Нью-Йорк", 350)'>Добавить</button>
+                        </div>
+
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <span class="item-name">Тирамису</span>
+                                <span class="item-price">370 ₽</span>
+                            </div>
+                            <button class="add-to-cart-btn" @onclick='() => AddToCart("Тирамису", 370)'>Добавить</button>
+                        </div>
+
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <span class="item-name">Маффин шоколадный</span>
+                                <span class="item-price">250 ₽</span>
+                            </div>
+                            <button class="add-to-cart-btn" @onclick='() => AddToCart("Маффин шоколадный", 250)'>Добавить</button>
+                        </div>
+
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <span class="item-name">Панна котта с ягодным соусом</span>
+                                <span class="item-price">320 ₽</span>
+                            </div>
+                            <button class="add-to-cart-btn" @onclick='() => AddToCart("Панна котта с ягодным соусом", 320)'>Добавить</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -554,65 +791,6 @@
 
 @code {
     private bool isBurgerMenuOpen = false;
-    private List<MenuItemDto> menuItemsSprSum;
-    private List<MenuItemDto> menuItemsComMenu;
-    private List<MenuItemDto> menuItemsTea;
-    private List<MenuItemDto> menuItemsClMenu;
-    private List<MenuItemDto> menuItemsCold;
-    private List<MenuItemDto> menuItemsDes;
-    private string errorMessage;
-    protected override async Task OnInitializedAsync()
-    {
-        try
-        {
-            string category1 = "ВеснаЛето";
-            string encoded1 = System.Net.WebUtility.UrlEncode(category1);
-            menuItemsSprSum = await Http.GetFromJsonAsync<List<MenuItemDto>>(
-    $"http://localhost:5153/Menu/category/{category1}");
-
-            string category2 = "Фирменное меню";
-            string encoded2 = System.Net.WebUtility.UrlEncode(category2);
-            menuItemsComMenu = await Http.GetFromJsonAsync<List<MenuItemDto>>(
-    $"http://localhost:5153/Menu/category/{category2}");
-
-            string category3 = "Авторские чаи";
-            string encoded3 = System.Net.WebUtility.UrlEncode(category3);
-            menuItemsTea = await Http.GetFromJsonAsync<List<MenuItemDto>>(
-    $"http://localhost:5153/Menu/category/{category3}");
-
-            string category4 = "Классические напитки";
-            string encoded4 = System.Net.WebUtility.UrlEncode(category4);
-            menuItemsClMenu = await Http.GetFromJsonAsync<List<MenuItemDto>>(
-    $"http://localhost:5153/Menu/category/{category4}");
-
-            string category5 = "Холодные напитки";
-            string encoded5 = System.Net.WebUtility.UrlEncode(category5);
-            menuItemsCold = await Http.GetFromJsonAsync<List<MenuItemDto>>(
-    $"http://localhost:5153/Menu/category/{category5}");
-
-            string category6 = "Десерты";
-            string encoded6 = System.Net.WebUtility.UrlEncode(category6);
-            menuItemsDes = await Http.GetFromJsonAsync<List<MenuItemDto>>(
-    $"http://localhost:5153/Menu/category/{category6}");
-
-        }
-        catch (Exception ex)
-        {
-            errorMessage = ex.Message;
-        }
-    }
-
-    public class MenuItemDto
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public decimal Price { get; set; }
-        public string Category { get; set; }
-        public int Calories { get; set; }
-
-        public string ImageUrl { get; init; } //добавила
-    }
 
     private void ToggleBurgerMenu()
     {
@@ -623,5 +801,18 @@
     {
         Navigation.NavigateTo($"/{page}");
         isBurgerMenuOpen = false;
+    }
+
+    private void AddToCart(string itemName, decimal price)
+    {
+        // Здесь будет логика добавления товара в корзину
+        // Пока просто выведем сообщение в консоль
+        Console.WriteLine($"Добавлено в корзину: {itemName} - {price} ₽");
+
+        // В реальном приложении здесь будет вызов метода для добавления в корзину
+        // Например: CartService.AddItem(itemName, price);
+
+        // Можно также добавить уведомление для пользователя
+        // Например: ShowNotification($"{itemName} добавлен в корзину");
     }
 }

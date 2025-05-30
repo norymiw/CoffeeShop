@@ -1,6 +1,5 @@
 ﻿@page "/spring-summer"
-@inject HttpClient Http
-@inject NavigationManager Navigation //вернула из проекта с заглушками, если не будет работать, то попробуйте убрать
+@inject NavigationManager Navigation
 
 <!DOCTYPE html>
 <html lang="ru">
@@ -452,24 +451,36 @@
             </div>
 
             <div class="drinks-grid">
-                @foreach (var item in menuItems)
+                @foreach (var drink in drinks)
                 {
                     <div class="drink-card">
                         <div class="drink-image-container">
-                            <img src="@item.ImageUrl" alt="@item.Name" class="drink-image">
+                            <img src="@drink.ImageUrl" alt="@drink.Name" class="drink-image">
                         </div>
                         <div class="drink-info">
-                            <h3 class="drink-name">@item.Name</h3>
-                            <p class="drink-description">@item.Description</p>
+                            <h3 class="drink-name">@drink.Name</h3>
+                            <p class="drink-description">@drink.Description</p>
 
                             <div class="nutrition-info">
                                 <div class="nutrition-row">
                                     <span class="nutrition-title">Ккал:</span>
-                                    <span class="nutrition-value">@item.Calories</span>
+                                    <span class="nutrition-value">@drink.Calories</span>
+                                </div>
+                                <div class="nutrition-row">
+                                    <span class="nutrition-title">Белки, г:</span>
+                                    <span class="nutrition-value">@drink.Protein.ToString("0.0")</span>
+                                </div>
+                                <div class="nutrition-row">
+                                    <span class="nutrition-title">Жиры, г:</span>
+                                    <span class="nutrition-value">@drink.Fat.ToString("0.0")</span>
+                                </div>
+                                <div class="nutrition-row">
+                                    <span class="nutrition-title">Углеводы, г:</span>
+                                    <span class="nutrition-value">@drink.Carbs.ToString("0.0")</span>
                                 </div>
                             </div>
 
-                            <p class="drink-price">@item.Price ₽</p>
+                            <p class="drink-price">@drink.Price ₽</p>
                         </div>
                     </div>
                 }
@@ -533,69 +544,120 @@
 </body>
 </html>
 
-//------------------------------------------- тесты после заглушки --------------------------------------------------
-
-@* @if (errorMessage != null)
-{
-    <p style="color:red">Ошибка: @errorMessage</p>
-}
-else if (menuItems == null)
-{
-    <p>Загрузка...</p>
-}
-else if (menuItems.Count == 0)
-{
-    <p>Нет напитков в этой категории.</p>
-}
-else
-{
-    <ul>
-        @foreach (var item in menuItems)
-        {
-            <li>@item.Name - @item.Price руб. - @item.Calories</li>
-        }
-    </ul>
-} *@
-
 @code {
-    private List<MenuItemDto> menuItems;
-    private string errorMessage;
-    private bool isBurgerMenuOpen = false; //вернула
+    private bool isBurgerMenuOpen = false;
 
-    protected override async Task OnInitializedAsync()
-    {
-        try
-        {
-            string category = "ВеснаЛето";
-            string encoded = System.Net.WebUtility.UrlEncode(category);
-
-            menuItems = await Http.GetFromJsonAsync<List<MenuItemDto>>(
-    $"http://localhost:5153/Menu/category/{category}");
-        }
-        catch (Exception ex)
-        {
-            errorMessage = ex.Message;
-        }
-    }
-
-    public class MenuItemDto
+    private class Drink
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public decimal Price { get; set; }
-        public string Category { get; set; }
+        public string ImageUrl { get; set; }
         public int Calories { get; set; }
-
-        public string ImageUrl { get; init; } //добавила
+        public decimal Protein { get; set; }
+        public decimal Fat { get; set; }
+        public decimal Carbs { get; set; }
     }
 
-    private void ToggleBurgerMenu() //вернула
+    private List<Drink> drinks = new()
     {
-        isBurgerMenuOpen = !isBurgerMenuOpen; 
+        new Drink {
+            Id = 1,
+            Name = "КЛУБНИЧНЫЙ РАФ",
+            Description = "Нежный раф с клубничным пюре и ванильным сиропом, украшенный свежей клубникой",
+            Price = 390,
+            ImageUrl = "/весенне-летние/клубнич раф.jpg",
+            Calories = 210,
+            Protein = 5.2m,
+            Fat = 8.1m,
+            Carbs = 28.5m
+        },
+        new Drink {
+            Id = 2,
+            Name = "КОКОСОВЫЙ АЙС КОФЕ",
+            Description = "Освежающий холодный кофе с кокосовым молоком и тропическими нотами",
+            Price = 350,
+            ImageUrl = "/весенне-летние/кокос айс кофе.jpg",
+            Calories = 180,
+            Protein = 3.8m,
+            Fat = 10.2m,
+            Carbs = 18.3m
+        },
+        new Drink {
+            Id = 3,
+            Name = "ЛАВАНДОВЫЙ ЛАТТЕ",
+            Description = "Ароматный латте с лавандовым сиропом и нежной молочной пеной",
+            Price = 370,
+            ImageUrl = "/весенне-летние/лаванда латте.jpg",
+            Calories = 195,
+            Protein = 6.0m,
+            Fat = 7.5m,
+            Carbs = 25.1m
+        },
+        new Drink {
+            Id = 4,
+            Name = "ЛИМОННЫЙ ТОНИК",
+            Description = "Бодрящий эспрессо с тоником и лимоном - идеальный летний напиток",
+            Price = 320,
+            ImageUrl = "/весенне-летние/лимон тоник.jpg",
+            Calories = 85,
+            Protein = 0.5m,
+            Fat = 0.1m,
+            Carbs = 20.3m
+        },
+        new Drink {
+            Id = 5,
+            Name = "МАЛИНОВЫЙ ФРАППУЧИНО",
+            Description = "Освежающий фраппучино с малиновым пюре и ванильным сиропом",
+            Price = 410,
+            ImageUrl = "/весенне-летние/малиновый фрап.jpg",
+            Calories = 280,
+            Protein = 4.5m,
+            Fat = 9.8m,
+            Carbs = 42.1m
+        },
+        new Drink {
+            Id = 6,
+            Name = "МАТЧА ЛАТТЕ",
+            Description = "Традиционный японский чай матча с молоком и легкой сладостью",
+            Price = 380,
+            ImageUrl = "/весенне-летние/матча латте.jpg",
+            Calories = 160,
+            Protein = 7.2m,
+            Fat = 5.5m,
+            Carbs = 20.8m
+        },
+        new Drink {
+            Id = 7,
+            Name = "ОГУРЕЧНО-МЯТНЫЙ ЛИМОНАД",
+            Description = "Освежающий лимонад с огурцом, мятой и лаймом - идеальный летний напиток",
+            Price = 290,
+            ImageUrl = "/весенне-летние/огурец лимонад мята.jpg",
+            Calories = 95,
+            Protein = 1.2m,
+            Fat = 0.2m,
+            Carbs = 23.5m
+        },
+        new Drink {
+            Id = 8,
+            Name = "ПЕРСИКОВЫЙ ЧАЙ",
+            Description = "Ароматный холодный чай с персиковым сиропом и кусочками свежего персика",
+            Price = 310,
+            ImageUrl = "/весенне-летние/персик чай.jpg",
+            Calories = 120,
+            Protein = 0.8m,
+            Fat = 0.1m,
+            Carbs = 29.8m
+        }
+    };
+
+    private void ToggleBurgerMenu()
+    {
+        isBurgerMenuOpen = !isBurgerMenuOpen;
     }
 
-    private void NavigateTo(string page) //вернула
+    private void NavigateTo(string page)
     {
         Navigation.NavigateTo($"/{page}");
         isBurgerMenuOpen = false;

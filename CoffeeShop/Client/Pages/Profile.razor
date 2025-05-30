@@ -597,7 +597,6 @@
                     <div class="profile-avatar">
                         <img src="@user.AvatarUrl" alt="Аватар" class="avatar-img">
                         <div class="avatar-upload">
-                           @* <input type="file" id="avatar-upload" style="display: none;" accept="image/*" @onchange="HandleAvatarUpload" />*@
                             <button type="button" class="avatar-upload-btn" @onclick="OpenFileInput" disabled="@(!editModes["personal"])">
                                 ЗАГРУЗИТЬ НОВОЕ ФОТО
                             </button>
@@ -606,13 +605,9 @@
                     </div>
 
                     <form class="profile-form">
-                        <div class="form-group">
+                        <div class="form-group full-width">
                             <label class="form-label">Имя</label>
                             <input type="text" class="form-input" @bind="user.FirstName" disabled="@(!editModes["personal"])">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Фамилия</label>
-                            <input type="text" class="form-input" @bind="user.LastName" disabled="@(!editModes["personal"])">
                         </div>
                         <div class="form-group">
                             <label class="form-label">Email</label>
@@ -650,9 +645,17 @@
                     </div>
 
                     <form class="profile-form">
-                        <div class="form-group full-width">
-                            <label class="form-label">Адрес</label>
-                            <input type="text" class="form-input" @bind="user.Address" disabled="@(!editModes["address"])">
+                        <div class="form-group">
+                            <label class="form-label">Улица</label>
+                            <input type="text" class="form-input" @bind="user.Street" disabled="@(!editModes["address"])">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Дом</label>
+                            <input type="text" class="form-input" @bind="user.House" disabled="@(!editModes["address"])">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Квартира</label>
+                            <input type="text" class="form-input" @bind="user.Apartment" disabled="@(!editModes["address"])">
                         </div>
                         <div class="form-group">
                             <label class="form-label">Этаж</label>
@@ -687,28 +690,7 @@
                         <span>ИСТОРИЯ ЗАКАЗОВ</span>
                     </div>
 
-                    @*@if (user.Orders.Any())
-                    {
-                        <div class="orders-list">
-                            @foreach (var order in user.Orders)
-                            {
-                                <div class="order-item" @onclick='() => NavigateToOrder(order.Id)'>
-                                    <div class="order-info">
-                                        <span class="order-number">Заказ №@order.Id</span>
-                                        <span class="order-date">@order.Date.ToString("dd.MM.yyyy HH:mm")</span>
-                                        <span class="order-status @order.Status.ToLower()">@GetStatusText(order.Status)</span>
-                                    </div>
-                                    <span class="order-price">@order.TotalPrice ₽</span>
-                                </div>
-                            }
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="no-orders">
-                            <p>У вас пока нет завершенных заказов</p>
-                        </div>
-                    }*@
+                    
                 </div>
             </div>
         </main>
@@ -780,10 +762,11 @@
         {
             AvatarUrl = "https://sun1-24.userapi.com/s/v1/ig2/X6lYWt8-F605DYLbbgd_QZ2YcG4V3opUGTjZUaPAcEzmGAXiNbTStcFNiAToPYkWkuoAUqMOfSMdiEJGUBvGe3Ea.jpg?size=1229x1229&quality=96&crop=5,0,1229,1229&ava=1",
             FirstName = "Иван",
-            LastName = "Иванов",
             Email = "ivanov@example.com",
             Phone = "+7 (900) 123-45-67",
-            Address = "ул. Ленина, д. 10, кв. 25",
+            Street = "ул. Ленина",
+            House = "д. 10",
+            Apartment = "кв. 25",
             Floor = 3,
             Intercom = "25#1234",
             DeliveryComment = "Позвонить за 5 минут до приезда",
@@ -823,7 +806,6 @@
         {
             editModes[section] = false;
             // Здесь должна быть логика сохранения данных на сервер
-            // Например, вызов API для обновления данных пользователя
             Console.WriteLine($"Данные раздела {section} сохранены");
         }
 
@@ -874,10 +856,11 @@
         {
             public string AvatarUrl { get; set; }
             public string FirstName { get; set; }
-            public string LastName { get; set; }
             public string Email { get; set; }
             public string Phone { get; set; }
-            public string Address { get; set; }
+            public string Street { get; set; }
+            public string House { get; set; }
+            public string Apartment { get; set; }
             public int Floor { get; set; }
             public string Intercom { get; set; }
             public string DeliveryComment { get; set; }
