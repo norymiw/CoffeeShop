@@ -1,5 +1,7 @@
 SET client_encoding = 'UTF8';
 
+CREATE SCHEMA "COFFEE_SHOP";
+
 CREATE TABLE "COFFEE_SHOP"."COFFEE_SHOP" (
     id integer NOT NULL,
     name character varying(30),
@@ -23,7 +25,8 @@ CREATE TABLE "COFFEE_SHOP"."MENU_ITEM" (
     description character varying(150),
     price numeric(7,0),
     category character varying(150),
-    calories integer
+    calories integer,
+    imageurl text
 );
 ALTER TABLE "COFFEE_SHOP"."MENU_ITEM" OWNER TO postgres;
 
@@ -56,6 +59,7 @@ CREATE TABLE "COFFEE_SHOP"."USER" (
 );
 ALTER TABLE "COFFEE_SHOP"."USER" OWNER TO postgres;
 
+-- Первичные ключи
 ALTER TABLE ONLY "COFFEE_SHOP"."COFFEE_SHOP"
     ADD CONSTRAINT "COFFEE_SHOP_pkey" PRIMARY KEY (id);
 
@@ -74,16 +78,15 @@ ALTER TABLE ONLY "COFFEE_SHOP"."ORDER"
 ALTER TABLE ONLY "COFFEE_SHOP"."USER"
     ADD CONSTRAINT "USER_pkey" PRIMARY KEY (id);
 
+-- Внешние ключи
 ALTER TABLE ONLY "COFFEE_SHOP"."ORDER_ITEM"
-    ADD CONSTRAINT menu_item_fkey FOREIGN KEY (menu_item_id) REFERENCES "COFFEE_SHOP"."MENU_ITEM"(id) NOT VALID;
+    ADD CONSTRAINT menu_item_fkey FOREIGN KEY (menu_item_id) REFERENCES "COFFEE_SHOP"."MENU_ITEM"(id);
 
 ALTER TABLE ONLY "COFFEE_SHOP"."ORDER_ITEM"
-    ADD CONSTRAINT order_fkey FOREIGN KEY (order_id) REFERENCES "COFFEE_SHOP"."ORDER"(id) NOT VALID;
+    ADD CONSTRAINT order_fkey FOREIGN KEY (order_id) REFERENCES "COFFEE_SHOP"."ORDER"(id);
 
 ALTER TABLE ONLY "COFFEE_SHOP"."ORDER"
-    ADD CONSTRAINT user_fkey FOREIGN KEY (user_id) REFERENCES "COFFEE_SHOP"."USER"(id) NOT VALID;
+    ADD CONSTRAINT user_fkey FOREIGN KEY (user_id) REFERENCES "COFFEE_SHOP"."USER"(id);
 
 ALTER TABLE ONLY "COFFEE_SHOP"."DELIVERY_ADDRESS"
     ADD CONSTRAINT user_fkey FOREIGN KEY (user_id) REFERENCES "COFFEE_SHOP"."USER"(id);
-
-
