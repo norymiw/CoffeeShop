@@ -1,0 +1,38 @@
+@inherits LayoutComponentBase
+
+<div class="page">
+    <header>
+        <div class="logo-container">
+            @*<img src="logotip.png" alt="Логотип ECHO COFFEE" class="logo-img">*@
+            @*<div class="logo-text">ECHO <span>COFFEE</span></div>*@
+        </div>
+        
+        <nav>
+            <ul class="nav-menu">
+                @*<li><NavLink href="#">КОМПАНИЯ</NavLink></li>
+                <li><NavLink href="#">МЕНЮ</NavLink></li>
+                <li><NavLink href="#">КОНТАКТЫ</NavLink></li>*@
+            </ul>
+        </nav>
+        
+        <button class="burger-btn" @onclick="ToggleBurgerMenu">
+       @*     <span class="burger-line"></span>
+            <span class="burger-line"></span>
+            <span class="burger-line"></span>*@
+        </button>
+    </header>
+
+    <main>
+        @Body
+    </main>
+
+    <footer>
+    </footer>
+</div>
+
+@code {
+    private void ToggleBurgerMenu()
+    {
+        // Логика для бургер-меню
+    }
+}
